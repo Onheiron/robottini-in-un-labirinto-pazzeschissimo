@@ -24,12 +24,21 @@ var meta_maze_connections: Dictionary = {}
 var current_cell_x: int = 0
 var current_cell_y: int = 0
 
+# Minimappa - traccia le celle visitate e le loro aperture
+# Chiave: Vector3i(meta_x, meta_y, cell_id) dove cell_id = cell_x * 10 + cell_y
+# Valore: Dictionary con "north", "south", "east", "west" (true se apertura)
+var visited_cells: Dictionary = {}
+var minimap_cell_size: int = 6
+var minimap_padding: int = 20
+var minimap_wall_thickness: int = 3
+
 func _ready():
 	generate_meta_meta_maze()
 	select_random_starting_meta_cell()
 	generate_meta_maze()
 	select_random_starting_cell()
 	generate_current_cell_maze()
+	record_current_cell()
 	draw_maze()
 
 func _process(_delta):
@@ -172,22 +181,98 @@ func select_random_starting_cell():
 	print("Cella figlio iniziale: (", current_cell_x, ", ", current_cell_y, ")")
 
 func move_to_cell(new_x: int, new_y: int):
-	## Sposta alla cella specificata se connessa
-	# Verifica che la cella sia valida
-	if new_x < 0 or new_x >= meta_maze_size or new_y < 0 or new_y >= meta_maze_size:
-		return
+	## Sposta alla cella specificata se connessa (gestisce anche cambio cella padre)
+	# Controlla se il movimento è all'interno del labirinto figlio corrente
+	if new_x >= 0 and new_x < meta_maze_size and new_y >= 0 and new_y < meta_maze_size:
+		# Movimento interno al labirinto figlio
+		var current_pos = Vector2i(current_cell_x, current_cell_y)
+		var new_pos = Vector2i(new_x, new_y)
+		
+		if meta_maze_connections.has(current_pos):
+			if new_pos in meta_maze_connections[current_pos]:
+				current_cell_x = new_x
+				current_cell_y = new_y
+				print("Spostato a cella figlio: (", current_cell_x, ", ", current_cell_y, ")")
+				generate_current_cell_maze()
+				record_current_cell()
+				draw_maze()
+	else:
+		# Movimento oltre i confini - potenziale cambio cella padre
+		var new_meta_x = current_meta_cell_x
+		var new_meta_y = current_meta_cell_y
+		var new_child_x = new_x
+		var new_child_y = new_y
+		
+		# Determina direzione e nuove coordinate
+		if new_x < 0:
+			new_meta_x -= 1
+			new_child_x = meta_maze_size - 1
+		elif new_x >= meta_maze_size:
+			new_meta_x += 1
+			new_child_x = 0
+		
+		if new_y < 0:
+			new_meta_y -= 1
+			new_child_y = meta_maze_size - 1
+		elif new_y >= meta_maze_size:
+			new_meta_y += 1
+			new_child_y = 0
+		
+		# Verifica che la nuova cella padre sia valida
+		if new_meta_x < 0 or new_meta_x >= meta_maze_size or new_meta_y < 0 or new_meta_y >= meta_maze_size:
+			return
+		
+		# Verifica connessione padre
+		var current_meta_pos = Vector2i(current_meta_cell_x, current_meta_cell_y)
+		var new_meta_pos = Vector2i(new_meta_x, new_meta_y)
+		
+		if meta_meta_maze_connections.has(current_meta_pos):
+			if new_meta_pos in meta_meta_maze_connections[current_meta_pos]:
+				# Cambia cella padre
+				current_meta_cell_x = new_meta_x
+				current_meta_cell_y = new_meta_y
+				print("Spostato a cella padre: (", current_meta_cell_x, ", ", current_meta_cell_y, ")")
+				
+				# Rigenera il labirinto figlio per la nuova cella padre
+				generate_meta_maze()
+				
+				# Posizionati nella cella figlio di confine
+				current_cell_x = new_child_x
+				current_cell_y = new_child_y
+				print("Entrato in cella figlio: (", current_cell_x, ", ", current_cell_y, ")")
+				
+				generate_current_cell_maze()
+				record_current_cell()
+				draw_maze()
+
+func record_current_cell():
+	## Registra la cella corrente come visitata con le sue aperture
+	var cell_key = Vector3i(current_meta_cell_x, current_meta_cell_y, current_cell_x * 10 + current_cell_y)
 	
-	# Verifica che ci sia una connessione
-	var current_pos = Vector2i(current_cell_x, current_cell_y)
-	var new_pos = Vector2i(new_x, new_y)
-	
-	if meta_maze_connections.has(current_pos):
-		if new_pos in meta_maze_connections[current_pos]:
-			current_cell_x = new_x
-			current_cell_y = new_y
-			print("Spostato a cella: (", current_cell_x, ", ", current_cell_y, ")")
-			generate_current_cell_maze()
-			draw_maze()
+	if not visited_cells.has(cell_key):
+		visited_cells[cell_key] = {
+			"north": has_any_opening_north(),
+			"south": has_any_opening_south(),
+			"east": has_any_opening_east(),
+			"west": has_any_opening_west()
+		}
+		print("Cella registrata: ", cell_key, " - ", visited_cells[cell_key])
+
+func has_any_opening_north() -> bool:
+	## Verifica se c'è un'apertura nel muro nord
+	return has_meta_connection(0, -1) or (current_cell_y == 0 and has_meta_meta_connection(0, -1))
+
+func has_any_opening_south() -> bool:
+	## Verifica se c'è un'apertura nel muro sud
+	return has_meta_connection(0, 1) or (current_cell_y == meta_maze_size - 1 and has_meta_meta_connection(0, 1))
+
+func has_any_opening_east() -> bool:
+	## Verifica se c'è un'apertura nel muro est
+	return has_meta_connection(1, 0) or (current_cell_x == meta_maze_size - 1 and has_meta_meta_connection(1, 0))
+
+func has_any_opening_west() -> bool:
+	## Verifica se c'è un'apertura nel muro ovest
+	return has_meta_connection(-1, 0) or (current_cell_x == 0 and has_meta_meta_connection(-1, 0))
 
 func generate_current_cell_maze():
 	## Genera il labirinto 32x32 per la cella corrente
@@ -376,8 +461,75 @@ func _draw():
 	if maze.is_empty():
 		return
 	
+	# Disegna il labirinto principale
 	for y in range(maze.size()):
 		for x in range(maze[y].size()):
 			var color = Color.BLACK if maze[y][x] == CellType.WALL else Color.WHITE
 			var rect = Rect2(x * cell_size, y * cell_size, cell_size, cell_size)
 			draw_rect(rect, color)
+	
+	# Disegna la minimappa
+	draw_minimap()
+
+func draw_minimap():
+	## Disegna la minimappa a destra del labirinto principale
+	## Include tutte le celle padre (10x10) e tutte le celle figlio di ciascuna (10x10)
+	var maze_width_pixels = (maze_width * 2 + 1) * cell_size
+	var minimap_x = maze_width_pixels + minimap_padding
+	var minimap_y = minimap_padding
+	var total_size = meta_maze_size * meta_maze_size * minimap_cell_size
+	var section_size = meta_maze_size * minimap_cell_size
+	
+	# Sfondo della minimappa (grande per contenere il 10x10 padre)
+	draw_rect(Rect2(minimap_x - 2, minimap_y - 2, total_size + 4, total_size + 4), Color.BLACK)
+	
+	# Disegna tutte le celle padre (10x10)
+	for meta_y in range(meta_maze_size):
+		for meta_x in range(meta_maze_size):
+			# Offset per questa cella padre
+			var base_x = minimap_x + meta_x * section_size
+			var base_y = minimap_y + meta_y * section_size
+			
+			# Disegna tutte le celle figlio (10x10) di questa cella padre
+			for cell_y in range(meta_maze_size):
+				for cell_x in range(meta_maze_size):
+					var cell_key = Vector3i(meta_x, meta_y, cell_x * 10 + cell_y)
+					var pos_x = base_x + cell_x * minimap_cell_size
+					var pos_y = base_y + cell_y * minimap_cell_size
+					
+					if visited_cells.has(cell_key):
+						# Cella visitata - disegna con aperture
+						draw_minimap_cell(pos_x, pos_y, visited_cells[cell_key])
+					else:
+						# Cella non visitata - grigia
+						draw_rect(Rect2(pos_x, pos_y, minimap_cell_size, minimap_cell_size), Color.DARK_GRAY)
+					
+					# Evidenzia la cella corrente
+					if meta_x == current_meta_cell_x and meta_y == current_meta_cell_y and cell_x == current_cell_x and cell_y == current_cell_y:
+						draw_rect(Rect2(pos_x, pos_y, minimap_cell_size, minimap_cell_size), Color.YELLOW, false, 2)
+			
+			# Evidenzia il bordo della cella padre corrente
+			if meta_x == current_meta_cell_x and meta_y == current_meta_cell_y:
+				draw_rect(Rect2(base_x, base_y, section_size, section_size), Color.GREEN, false, 2)
+
+func draw_minimap_cell(x: int, y: int, openings: Dictionary):
+	## Disegna una singola cella della minimappa con le sue aperture
+	# Riempimento bianco per la cella visitata
+	draw_rect(Rect2(x, y, minimap_cell_size, minimap_cell_size), Color.WHITE)
+	
+	# Disegna i muri (neri) tranne dove ci sono aperture - muri più spessi
+	# Muro nord (superiore)
+	if not openings["north"]:
+		draw_line(Vector2(x, y), Vector2(x + minimap_cell_size, y), Color.BLACK, minimap_wall_thickness)
+	
+	# Muro sud (inferiore)
+	if not openings["south"]:
+		draw_line(Vector2(x, y + minimap_cell_size), Vector2(x + minimap_cell_size, y + minimap_cell_size), Color.BLACK, minimap_wall_thickness)
+	
+	# Muro ovest (sinistro)
+	if not openings["west"]:
+		draw_line(Vector2(x, y), Vector2(x, y + minimap_cell_size), Color.BLACK, minimap_wall_thickness)
+	
+	# Muro est (destro)
+	if not openings["east"]:
+		draw_line(Vector2(x + minimap_cell_size, y), Vector2(x + minimap_cell_size, y + minimap_cell_size), Color.BLACK, minimap_wall_thickness)
