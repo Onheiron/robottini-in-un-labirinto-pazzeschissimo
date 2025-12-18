@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://1r36ushdkos0"]
 
-[ext_resource type="Script" uid="uid://btmaj2qpwa3g1" path="res://maze_generator.gd" id="1_1x2y3"]
+[ext_resource type="Script" uid="uid://dpdauwdu8hexy" path="res://scripts/maze_generator.gd" id="1_1x2y3"]
 
 [node name="Main" type="Node2D"]
 
