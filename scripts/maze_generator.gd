@@ -4,6 +4,7 @@ extends Node2D
 
 const MazeBuilder = preload("res://scripts/maze_builder.gd")
 const Minimap = preload("res://scripts/minimap.gd")
+const WorldState = preload("res://scripts/world_state.gd")
 
 @export var maze_width: int = 32
 @export var maze_height: int = 32
@@ -27,14 +28,35 @@ var current_cell_y: int = 0
 # Minimappa
 var minimap: Minimap
 
+# Stato del mondo (modifiche al labirinto procedurale)
+var world_state: WorldState
+
+# Coordinate iniziali
+var start_meta_x: int
+var start_meta_y: int
+var start_cell_x: int
+var start_cell_y: int
+
 func _ready():
 	minimap = Minimap.new()
 	minimap.meta_maze_size = meta_maze_size
+	
+	world_state = WorldState.new()
 	
 	generate_meta_meta_maze()
 	select_random_starting_meta_cell()
 	generate_meta_maze()
 	select_random_starting_cell()
+	
+	# Salva le coordinate iniziali
+	start_meta_x = current_meta_cell_x
+	start_meta_y = current_meta_cell_y
+	start_cell_x = current_cell_x
+	start_cell_y = current_cell_y
+	
+	# Crea area di spawn con cerchio rosso
+	setup_spawn_area()
+	
 	generate_current_cell_maze()
 	record_current_cell()
 	draw_maze()
@@ -142,6 +164,18 @@ func move_to_cell(new_x: int, new_y: int):
 				record_current_cell()
 				draw_maze()
 
+func setup_spawn_area():
+	## Crea l'area di spawn iniziale con cerchio rosso e area sgombra
+	var maze_center = Vector2((maze_width * 2 + 1) / 2.0, (maze_height * 2 + 1) / 2.0)
+	
+	# Rimuovi muri in un'area 64x64 pixel = circa 3.2 celle del labirinto
+	var clear_area_size = Vector2(4, 4)  # In unità di griglia
+	world_state.clear_area(start_meta_x, start_meta_y, start_cell_x, start_cell_y, maze_center, clear_area_size)
+	
+	# Piazza il cerchio rosso al centro (48x48 pixel)
+	var circle_position = Vector2(maze_center.x * cell_size, maze_center.y * cell_size)
+	world_state.place_object(start_meta_x, start_meta_y, start_cell_x, start_cell_y, circle_position, "spawn_circle", {"radius": 24, "color": Color.RED})
+
 func record_current_cell():
 	## Registra la cella corrente come visitata
 	var openings = {
@@ -246,12 +280,28 @@ func _draw():
 	if maze.is_empty():
 		return
 	
-	# Disegna il labirinto principale
+	# Disegna il labirinto principale con le modifiche dello stato
 	for y in range(maze.size()):
 		for x in range(maze[y].size()):
-			var color = Color.BLACK if maze[y][x] == MazeBuilder.CellType.WALL else Color(1.0, 1.0, 0.8)
+			# Controlla se questo muro è stato rimosso dallo stato
+			var is_removed = world_state.is_wall_removed(current_meta_cell_x, current_meta_cell_y, current_cell_x, current_cell_y, x, y)
+			
+			# Se il muro è rimosso, forza a essere un passaggio
+			var cell_type = maze[y][x]
+			if is_removed:
+				cell_type = MazeBuilder.CellType.PATH
+			
+			var color = Color.BLACK if cell_type == MazeBuilder.CellType.WALL else Color(1.0, 1.0, 0.8)
 			var rect = Rect2(x * cell_size, y * cell_size, cell_size, cell_size)
 			draw_rect(rect, color)
+	
+	# Disegna gli oggetti piazzati in questa cella
+	var objects = world_state.get_objects_in_cell(current_meta_cell_x, current_meta_cell_y, current_cell_x, current_cell_y)
+	for obj in objects:
+		if obj["type"] == "spawn_circle":
+			var radius = obj["data"]["radius"]
+			var obj_color = obj["data"]["color"]
+			draw_circle(obj["position"], radius, obj_color)
 	
 	# Disegna la minimappa
 	var maze_width_pixels = (maze_width * 2 + 1) * cell_size
