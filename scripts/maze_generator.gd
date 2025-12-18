@@ -46,7 +46,13 @@ var is_panning: bool = false
 var pan_start_mouse: Vector2
 var pan_start_offset: Vector2
 
+# Texture base robotica
+var robot_base_texture: Texture2D
+
 func _ready():
+	# Carica la texture della base robotica
+	robot_base_texture = load("res://assets/robot_base.svg")
+	
 	minimap = Minimap.new()
 	minimap.meta_maze_size = meta_maze_size
 	
@@ -399,9 +405,12 @@ func _draw():
 	var objects = world_state.get_objects_in_cell(current_meta_cell_x, current_meta_cell_y, current_cell_x, current_cell_y)
 	for obj in objects:
 		if obj["type"] == "spawn_circle":
-			var radius = obj["data"]["radius"]
-			var obj_color = obj["data"]["color"]
-			draw_circle(obj["position"], radius, obj_color)
+			# Disegna la base robotica invece del cerchio
+			if robot_base_texture:
+				var texture_size = Vector2(64, 80)  # Dimensione della texture (più alta)
+				# Centro l'SVG rispetto al suo centro geometrico (texture_size / 2)
+				var pos = obj["position"] - texture_size / 2
+				draw_texture_rect(robot_base_texture, Rect2(pos, texture_size), false)
 		elif obj["type"] == "junction":
 			# Disegna snodi con verde scuro
 			var junction_rect = Rect2(obj["position"].x * cell_size, obj["position"].y * cell_size, cell_size, cell_size)
