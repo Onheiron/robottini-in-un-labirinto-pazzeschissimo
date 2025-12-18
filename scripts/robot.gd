@@ -5,7 +5,7 @@ extends RefCounted
 
 var position: Vector2
 var maze_cell_size: int
-var move_speed: float = 2.0  # Celle al secondo
+var move_speed: float = 40.0  # Pixel al secondo
 
 # Comportamento corrente
 var behavior: RobotBehavior
@@ -19,6 +19,7 @@ var move_queue: Array = []  # Array di Vector2i
 # Stato movimento
 var is_moving: bool = false
 var move_target: Vector2
+var move_start: Vector2
 var move_progress: float = 0.0
 
 # Area di spawn (dove non lasciare snodi)
@@ -67,7 +68,15 @@ func update(delta: float, maze: Array, world_state) -> bool:
 
 func _update_movement(delta: float, world_state) -> bool:
 	## Gestisce il movimento verso il target
-	move_progress += delta * move_speed
+	# Calcola la distanza totale da percorrere
+	var total_distance = move_start.distance_to(move_target)
+	
+	# Calcola quanto movimento fare in pixel
+	var distance_this_frame = move_speed * delta
+	
+	# Aggiorna progress in base alla distanza percorsa
+	if total_distance > 0:
+		move_progress += distance_this_frame / total_distance
 	
 	if move_progress >= 1.0:
 		position = move_target
@@ -80,13 +89,8 @@ func _update_movement(delta: float, world_state) -> bool:
 		
 		return true
 	else:
-		# Interpola tra posizione corrente e target
-		var start_pos = Vector2(
-			move_target.x - (move_target.x - position.x) / (1.0 - move_progress) if move_progress < 1.0 else position.x,
-			move_target.y - (move_target.y - position.y) / (1.0 - move_progress) if move_progress < 1.0 else position.y
-		)
-		var t = move_progress
-		position = start_pos.lerp(move_target, t)
+		# Interpola tra posizione iniziale e target PIXEL PER PIXEL
+		position = move_start.lerp(move_target, move_progress)
 		return false
 
 ## Funzioni di utilità pubbliche per i behavior
@@ -141,6 +145,7 @@ func can_move_to(x: int, y: int, maze: Array, world_state) -> bool:
 
 func move_to_position(grid_pos: Vector2i):
 	## Inizia il movimento verso una posizione griglia
+	move_start = position  # Salva la posizione corrente come inizio
 	move_target = Vector2(
 		grid_pos.x * maze_cell_size + maze_cell_size / 2.0,
 		grid_pos.y * maze_cell_size + maze_cell_size / 2.0

@@ -65,17 +65,20 @@ func _ready():
 	draw_maze()
 
 func _process(_delta):
-	# Aggiorna il robot solo nella cella di spawn
-	if current_meta_cell_x == start_meta_x and current_meta_cell_y == start_meta_y and current_cell_x == start_cell_x and current_cell_y == start_cell_y:
-		if robot != null:
-			world_state.set_current_cell(current_meta_cell_x, current_meta_cell_y, current_cell_x, current_cell_y)
-			var moved = robot.update(_delta, maze, world_state)
+	# Aggiorna il robot sempre (anche fuori dalla cella corrente)
+	if robot != null:
+		world_state.set_current_cell(robot.current_meta_x, robot.current_meta_y, robot.current_cell_x, robot.current_cell_y)
+		var moved = robot.update(_delta, maze, world_state)
+		
+		# RIDISEGNA SEMPRE per mostrare il movimento fluido del robot
+		if moved or robot.is_moving:
+			# Marca la tile visitata solo quando raggiunge effettivamente una nuova cella
 			if moved:
-				# Marca la tile visitata
 				var grid_pos = robot.get_grid_position()
-				world_state.mark_tile_visited(current_meta_cell_x, current_meta_cell_y, current_cell_x, current_cell_y, grid_pos.x, grid_pos.y)
-				draw_maze()
-		# Gestione input per cambio cella
+				world_state.mark_tile_visited(robot.current_meta_x, robot.current_meta_y, robot.current_cell_x, robot.current_cell_y, grid_pos.x, grid_pos.y)
+			draw_maze()
+	
+	# Gestione input per cambio cella
 	if Input.is_action_just_pressed("ui_right"):
 		move_to_cell(current_cell_x + 1, current_cell_y)
 	elif Input.is_action_just_pressed("ui_left"):
@@ -335,8 +338,8 @@ func _draw():
 			var junction_rect = Rect2(obj["position"].x * cell_size, obj["position"].y * cell_size, cell_size, cell_size)
 			draw_rect(junction_rect, Color(0.2, 0.6, 0.2))
 	
-	# Disegna il robot se siamo nella cella di spawn
-	if robot != null and current_meta_cell_x == start_meta_x and current_meta_cell_y == start_meta_y and current_cell_x == start_cell_x and current_cell_y == start_cell_y:
+	# Disegna il robot se si trova nella cella attualmente visualizzata
+	if robot != null and current_meta_cell_x == robot.current_meta_x and current_meta_cell_y == robot.current_meta_y and current_cell_x == robot.current_cell_x and current_cell_y == robot.current_cell_y:
 		draw_circle(robot.position, 8, Color.BLUE)
 	
 	# Disegna la minimappa
