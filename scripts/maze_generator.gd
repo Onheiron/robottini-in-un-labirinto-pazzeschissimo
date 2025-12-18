@@ -2,10 +2,6 @@ extends Node2D
 
 ## Generatore principale del labirinto gerarchico
 
-const MazeBuilder = preload("res://scripts/maze_builder.gd")
-const Minimap = preload("res://scripts/minimap.gd")
-const WorldState = preload("res://scripts/world_state.gd")
-
 @export var maze_width: int = 32
 @export var maze_height: int = 32
 @export var cell_size: int = 20
@@ -30,6 +26,9 @@ var minimap: Minimap
 
 # Stato del mondo (modifiche al labirinto procedurale)
 var world_state: WorldState
+
+# Robot esploratore
+var robot: Robot
 
 # Coordinate iniziali
 var start_meta_x: int
@@ -57,12 +56,25 @@ func _ready():
 	# Crea area di spawn con cerchio rosso
 	setup_spawn_area()
 	
+	# Crea il robot esploratore
+	setup_robot()
+	
 	generate_current_cell_maze()
 	record_current_cell()
 	draw_maze()
 
 func _process(_delta):
-	# Gestione input per cambio cella
+	# Aggiorna il robot solo nella cella di spawn
+	if current_meta_cell_x == start_meta_x and current_meta_cell_y == start_meta_y and current_cell_x == start_cell_x and current_cell_y == start_cell_y:
+		if robot != null:
+			world_state.set_current_cell(current_meta_cell_x, current_meta_cell_y, current_cell_x, current_cell_y)
+			var moved = robot.update(_delta, maze, world_state)
+			if moved:
+				# Marca la tile visitata
+				var grid_pos = robot.get_grid_position()
+				world_state.mark_tile_visited(current_meta_cell_x, current_meta_cell_y, current_cell_x, current_cell_y, grid_pos.x, grid_pos.y)
+				draw_maze()
+		# Gestione input per cambio cella
 	if Input.is_action_just_pressed("ui_right"):
 		move_to_cell(current_cell_x + 1, current_cell_y)
 	elif Input.is_action_just_pressed("ui_left"):
@@ -175,6 +187,13 @@ func setup_spawn_area():
 	# Piazza il cerchio rosso al centro (48x48 pixel)
 	var circle_position = Vector2(maze_center.x * cell_size, maze_center.y * cell_size)
 	world_state.place_object(start_meta_x, start_meta_y, start_cell_x, start_cell_y, circle_position, "spawn_circle", {"radius": 24, "color": Color.RED})
+
+func setup_robot():
+	## Crea il robot esploratore vicino alla base
+	var maze_center = Vector2((maze_width * 2 + 1) / 2.0, (maze_height * 2 + 1) / 2.0)
+	var robot_spawn = Vector2((maze_center.x + 2) * cell_size, maze_center.y * cell_size)
+	
+	robot = Robot.new(robot_spawn, cell_size, start_meta_x, start_meta_y, start_cell_x, start_cell_y)
 
 func record_current_cell():
 	## Registra la cella corrente come visitata
@@ -291,7 +310,15 @@ func _draw():
 			if is_removed:
 				cell_type = MazeBuilder.CellType.PATH
 			
-			var color = Color.BLACK if cell_type == MazeBuilder.CellType.WALL else Color(1.0, 1.0, 0.8)
+			# Colora diversamente le tile visitate dal robot
+			var color: Color
+			if cell_type == MazeBuilder.CellType.WALL:
+				color = Color.BLACK
+			else:
+				# Verifica se la tile è stata visitata
+				var is_visited = world_state.is_tile_visited(current_meta_cell_x, current_meta_cell_y, current_cell_x, current_cell_y, x, y)
+				color = Color(0.6, 1.0, 0.6) if is_visited else Color(1.0, 1.0, 0.8)  # Verde chiaro vs giallo
+			
 			var rect = Rect2(x * cell_size, y * cell_size, cell_size, cell_size)
 			draw_rect(rect, color)
 	
@@ -302,6 +329,14 @@ func _draw():
 			var radius = obj["data"]["radius"]
 			var obj_color = obj["data"]["color"]
 			draw_circle(obj["position"], radius, obj_color)
+		elif obj["type"] == "junction":
+			# Disegna snodi con verde scuro
+			var junction_rect = Rect2(obj["position"].x * cell_size, obj["position"].y * cell_size, cell_size, cell_size)
+			draw_rect(junction_rect, Color(0.2, 0.6, 0.2))
+	
+	# Disegna il robot se siamo nella cella di spawn
+	if robot != null and current_meta_cell_x == start_meta_x and current_meta_cell_y == start_meta_y and current_cell_x == start_cell_x and current_cell_y == start_cell_y:
+		draw_circle(robot.position, 8, Color.BLUE)
 	
 	# Disegna la minimappa
 	var maze_width_pixels = (maze_width * 2 + 1) * cell_size
