@@ -100,13 +100,33 @@ func _unhandled_input(event: InputEvent):
 	# Gestione zoom con scroll (wheel mouse o trackpad)
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
+			# Calcola la posizione del mouse nel mondo prima dello zoom (relativa a questo Node2D)
+			var mouse_pos = get_local_mouse_position()
+			var world_pos = (mouse_pos - pan_offset) / zoom_level
+			
+			# Applica zoom
+			var old_zoom = zoom_level
 			zoom_level = min(zoom_level * 1.1, 8.0)
+			
+			# Aggiusta il pan per mantenere il punto sotto il mouse fisso
+			pan_offset = mouse_pos - world_pos * zoom_level
+			
 			queue_redraw()
 			get_viewport().set_input_as_handled()
 		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+			# Calcola la posizione del mouse nel mondo prima dello zoom (relativa a questo Node2D)
+			var mouse_pos = get_local_mouse_position()
+			var world_pos = (mouse_pos - pan_offset) / zoom_level
+			
+			# Applica zoom
 			zoom_level = max(zoom_level / 1.1, 1.0)
+			
+			# Aggiusta il pan per mantenere il punto sotto il mouse fisso
 			if zoom_level == 1.0:
 				pan_offset = Vector2.ZERO
+			else:
+				pan_offset = mouse_pos - world_pos * zoom_level
+			
 			queue_redraw()
 			get_viewport().set_input_as_handled()
 		# Gestione pan con drag mouse (solo se zoommato)
@@ -120,14 +140,24 @@ func _unhandled_input(event: InputEvent):
 	
 	# Supporto per gesti trackpad su Mac (pinch/pan)
 	if event is InputEventPanGesture:
+		# Calcola la posizione del mouse nel mondo prima dello zoom (relativa a questo Node2D)
+		var mouse_pos = get_local_mouse_position()
+		var world_pos = (mouse_pos - pan_offset) / zoom_level
+		
 		# Delta.y negativo = scroll up = zoom in
 		if event.delta.y < 0:
 			zoom_level = min(zoom_level * 1.05, 8.0)
 		else:
 			zoom_level = max(zoom_level / 1.05, 1.0)
-			if zoom_level == 1.0:
-				pan_offset = Vector2.ZERO
+		
+		# Aggiusta il pan per mantenere il punto sotto il mouse fisso
+		if zoom_level == 1.0:
+			pan_offset = Vector2.ZERO
+		else:
+			pan_offset = mouse_pos - world_pos * zoom_level
+		
 		queue_redraw()
+		get_viewport().set_input_as_handled()
 		get_viewport().set_input_as_handled()
 	
 	if event is InputEventMouseMotion and is_panning:
