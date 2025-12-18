@@ -13,6 +13,9 @@ var behavior: RobotBehavior
 # Maze corrente (riferimento)
 var current_maze: Array = []
 
+# Coda di movimento per pathfinding
+var move_queue: Array = []  # Array di Vector2i
+
 # Stato movimento
 var is_moving: bool = false
 var move_target: Vector2
@@ -54,6 +57,11 @@ func update(delta: float, maze: Array, world_state) -> bool:
 	current_maze = maze
 	if is_moving:
 		return _update_movement(delta, world_state)
+	elif move_queue.size() > 0:
+		# C'è un percorso da seguire
+		var next_pos = move_queue.pop_front()
+		move_to_position(next_pos)
+		return true
 	else:
 		return behavior.update(delta, maze, world_state)
 
@@ -139,3 +147,54 @@ func move_to_position(grid_pos: Vector2i):
 	)
 	is_moving = true
 	move_progress = 0.0
+
+func move_to_position_with_path(target: Vector2i, maze: Array, world_state):
+	## Muove il robot verso una posizione usando pathfinding
+	var current_pos = get_grid_position()
+	
+	# Se siamo già lì, non fare nulla
+	if current_pos == target:
+		return
+	
+	# Calcola il percorso con BFS
+	var path = _find_path_bfs(current_pos, target, maze, world_state)
+	
+	if path.size() > 0:
+		# Rimuovi la posizione corrente se è la prima
+		if path[0] == current_pos:
+			path.pop_front()
+		
+		# Imposta la coda di movimento
+		move_queue = path
+	else:
+		# Nessun percorso trovato, muoviti direttamente
+		move_to_position(target)
+
+func _find_path_bfs(start: Vector2i, goal: Vector2i, maze: Array, world_state) -> Array:
+	## Trova un percorso con BFS
+	var queue: Array = [[start]]
+	var visited: Dictionary = {start: true}
+	
+	while queue.size() > 0:
+		var path = queue.pop_front()
+		var current = path[path.size() - 1]
+		
+		if current == goal:
+			return path
+		
+		# Esplora i vicini
+		var neighbors = [
+			Vector2i(current.x, current.y - 1),
+			Vector2i(current.x, current.y + 1),
+			Vector2i(current.x + 1, current.y),
+			Vector2i(current.x - 1, current.y)
+		]
+		
+		for neighbor in neighbors:
+			if not visited.has(neighbor) and can_move_to(neighbor.x, neighbor.y, maze, world_state):
+				visited[neighbor] = true
+				var new_path = path.duplicate()
+				new_path.append(neighbor)
+				queue.append(new_path)
+	
+	return []

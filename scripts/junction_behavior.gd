@@ -66,9 +66,9 @@ func _explore_next(maze: Array, world_state) -> bool:
 		# Abbiamo uno svincolo da esplorare
 		current_junction_pos = target_junction
 		
-		# Se non siamo già lì, muoviti verso di esso
+		# Se non siamo già lì, muoviti verso di esso con pathfinding
 		if grid_pos != target_junction:
-			robot_ref.move_to_position(target_junction)
+			robot_ref.move_to_position_with_path(target_junction, maze, world_state)
 			return true
 		
 		# Siamo allo svincolo, scegli un ramo non esplorato
@@ -160,11 +160,11 @@ func _start_exploring_branch(_grid_pos: Vector2i, _maze: Array, _world_state) ->
 
 func _find_new_root_junction(grid_pos: Vector2i, maze: Array, world_state) -> bool:
 	## Cerca un nuovo svincolo radice adiacente all'area spawn
-	# Se non siamo nell'area spawn, torniamo prima lì
+	# Se non siamo nell'area spawn, torniamo prima lì con pathfinding
 	if not robot_ref.is_in_spawn_area(grid_pos):
 		# Torna verso il centro dell'area spawn
 		var spawn_center = robot_ref.spawn_center
-		robot_ref.move_to_position(spawn_center)
+		robot_ref.move_to_position_with_path(spawn_center, maze, world_state)
 		return true
 	
 	# Cerca svincoli adiacenti non ancora esplorati

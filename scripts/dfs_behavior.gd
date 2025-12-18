@@ -63,8 +63,8 @@ func _backtrack(maze: Array, world_state) -> bool:
 		var unvisited = robot_ref.get_unvisited_neighbors(junction_pos, maze, world_state)
 		
 		if unvisited.size() > 0:
-			# C'è ancora qualcosa da esplorare, torna a questo snodo
-			robot_ref.move_to_position(junction_pos)
+			# C'è ancora qualcosa da esplorare, torna a questo snodo con pathfinding
+			robot_ref.move_to_position_with_path(junction_pos, maze, world_state)
 			return true
 	
 	# Stack vuoto - esplorazione completata
