@@ -39,6 +39,8 @@ var start_cell_y: int
 
 # Zoom e pan
 var zoom_level: float = 1.0
+var zoom_target: float = 1.0
+var zoom_speed: float = 8.0  # Velocità di interpolazione
 var pan_offset: Vector2 = Vector2.ZERO
 var is_panning: bool = false
 var pan_start_mouse: Vector2
@@ -72,6 +74,25 @@ func _ready():
 	draw_maze()
 
 func _process(_delta):
+	# Interpola zoom verso target per effetto fluido
+	if abs(zoom_level - zoom_target) > 0.001:
+		var mouse_pos = get_local_mouse_position()
+		var world_pos = (mouse_pos - pan_offset) / zoom_level
+		
+		# Interpola lo zoom
+		zoom_level = lerp(zoom_level, zoom_target, _delta * zoom_speed)
+		
+		# Aggiusta il pan per mantenere il punto del mouse fisso durante l'interpolazione
+		pan_offset = mouse_pos - world_pos * zoom_level
+		
+		# Snap finale quando molto vicino al target
+		if abs(zoom_level - zoom_target) < 0.01:
+			zoom_level = zoom_target
+			if zoom_level == 1.0:
+				pan_offset = Vector2.ZERO
+		
+		queue_redraw()
+	
 	# Aggiorna il robot sempre (anche fuori dalla cella corrente)
 	if robot != null:
 		world_state.set_current_cell(robot.current_meta_x, robot.current_meta_y, robot.current_cell_x, robot.current_cell_y)
@@ -100,34 +121,12 @@ func _unhandled_input(event: InputEvent):
 	# Gestione zoom con scroll (wheel mouse o trackpad)
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
-			# Calcola la posizione del mouse nel mondo prima dello zoom (relativa a questo Node2D)
-			var mouse_pos = get_local_mouse_position()
-			var world_pos = (mouse_pos - pan_offset) / zoom_level
-			
-			# Applica zoom
-			var old_zoom = zoom_level
-			zoom_level = min(zoom_level * 1.1, 8.0)
-			
-			# Aggiusta il pan per mantenere il punto sotto il mouse fisso
-			pan_offset = mouse_pos - world_pos * zoom_level
-			
-			queue_redraw()
+			# Aggiorna il target invece di zoom diretto
+			zoom_target = min(zoom_target * 1.15, 8.0)
 			get_viewport().set_input_as_handled()
 		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
-			# Calcola la posizione del mouse nel mondo prima dello zoom (relativa a questo Node2D)
-			var mouse_pos = get_local_mouse_position()
-			var world_pos = (mouse_pos - pan_offset) / zoom_level
-			
-			# Applica zoom
-			zoom_level = max(zoom_level / 1.1, 1.0)
-			
-			# Aggiusta il pan per mantenere il punto sotto il mouse fisso
-			if zoom_level == 1.0:
-				pan_offset = Vector2.ZERO
-			else:
-				pan_offset = mouse_pos - world_pos * zoom_level
-			
-			queue_redraw()
+			# Aggiorna il target invece di zoom diretto
+			zoom_target = max(zoom_target / 1.15, 1.0)
 			get_viewport().set_input_as_handled()
 		# Gestione pan con drag mouse (solo se zoommato)
 		elif event.button_index == MOUSE_BUTTON_LEFT:
@@ -140,23 +139,12 @@ func _unhandled_input(event: InputEvent):
 	
 	# Supporto per gesti trackpad su Mac (pinch/pan)
 	if event is InputEventPanGesture:
-		# Calcola la posizione del mouse nel mondo prima dello zoom (relativa a questo Node2D)
-		var mouse_pos = get_local_mouse_position()
-		var world_pos = (mouse_pos - pan_offset) / zoom_level
-		
 		# Delta.y negativo = scroll up = zoom in
 		if event.delta.y < 0:
-			zoom_level = min(zoom_level * 1.05, 8.0)
+			zoom_target = min(zoom_target * 1.05, 8.0)
 		else:
-			zoom_level = max(zoom_level / 1.05, 1.0)
+			zoom_target = max(zoom_target / 1.05, 1.0)
 		
-		# Aggiusta il pan per mantenere il punto sotto il mouse fisso
-		if zoom_level == 1.0:
-			pan_offset = Vector2.ZERO
-		else:
-			pan_offset = mouse_pos - world_pos * zoom_level
-		
-		queue_redraw()
 		get_viewport().set_input_as_handled()
 		get_viewport().set_input_as_handled()
 	
