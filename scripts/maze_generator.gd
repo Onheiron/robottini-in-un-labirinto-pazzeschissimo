@@ -37,6 +37,13 @@ var start_meta_y: int
 var start_cell_x: int
 var start_cell_y: int
 
+# Zoom e pan
+var zoom_level: float = 1.0
+var pan_offset: Vector2 = Vector2.ZERO
+var is_panning: bool = false
+var pan_start_mouse: Vector2
+var pan_start_offset: Vector2
+
 func _ready():
 	minimap = Minimap.new()
 	minimap.meta_maze_size = meta_maze_size
@@ -78,15 +85,55 @@ func _process(_delta):
 				world_state.mark_tile_visited(robot.current_meta_x, robot.current_meta_y, robot.current_cell_x, robot.current_cell_y, grid_pos.x, grid_pos.y)
 			draw_maze()
 	
-	# Gestione input per cambio cella
-	if Input.is_action_just_pressed("ui_right"):
-		move_to_cell(current_cell_x + 1, current_cell_y)
-	elif Input.is_action_just_pressed("ui_left"):
-		move_to_cell(current_cell_x - 1, current_cell_y)
-	elif Input.is_action_just_pressed("ui_down"):
-		move_to_cell(current_cell_x, current_cell_y + 1)
-	elif Input.is_action_just_pressed("ui_up"):
-		move_to_cell(current_cell_x, current_cell_y - 1)
+	# Gestione input per cambio cella (solo se non stiamo pannando)
+	if not is_panning:
+		if Input.is_action_just_pressed("ui_right"):
+			move_to_cell(current_cell_x + 1, current_cell_y)
+		elif Input.is_action_just_pressed("ui_left"):
+			move_to_cell(current_cell_x - 1, current_cell_y)
+		elif Input.is_action_just_pressed("ui_down"):
+			move_to_cell(current_cell_x, current_cell_y + 1)
+		elif Input.is_action_just_pressed("ui_up"):
+			move_to_cell(current_cell_x, current_cell_y - 1)
+
+func _unhandled_input(event: InputEvent):
+	# Gestione zoom con scroll (wheel mouse o trackpad)
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
+			zoom_level = min(zoom_level * 1.1, 8.0)
+			queue_redraw()
+			get_viewport().set_input_as_handled()
+		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+			zoom_level = max(zoom_level / 1.1, 1.0)
+			if zoom_level == 1.0:
+				pan_offset = Vector2.ZERO
+			queue_redraw()
+			get_viewport().set_input_as_handled()
+		# Gestione pan con drag mouse (solo se zoommato)
+		elif event.button_index == MOUSE_BUTTON_LEFT:
+			if event.pressed and zoom_level > 1.0:
+				is_panning = true
+				pan_start_mouse = event.position
+				pan_start_offset = pan_offset
+			else:
+				is_panning = false
+	
+	# Supporto per gesti trackpad su Mac (pinch/pan)
+	if event is InputEventPanGesture:
+		# Delta.y negativo = scroll up = zoom in
+		if event.delta.y < 0:
+			zoom_level = min(zoom_level * 1.05, 8.0)
+		else:
+			zoom_level = max(zoom_level / 1.05, 1.0)
+			if zoom_level == 1.0:
+				pan_offset = Vector2.ZERO
+		queue_redraw()
+		get_viewport().set_input_as_handled()
+	
+	if event is InputEventMouseMotion and is_panning:
+		var delta = event.position - pan_start_mouse
+		pan_offset = pan_start_offset + delta
+		queue_redraw()
 
 func generate_meta_meta_maze():
 	## Genera il meta-meta-labirinto 10x10 padre usando Eller
@@ -303,6 +350,10 @@ func _draw():
 	if maze.is_empty():
 		return
 	
+	# === PARTE 1: LABIRINTO CON ZOOM E PAN ===
+	# Applica trasformazione solo al labirinto
+	draw_set_transform(pan_offset, 0.0, Vector2(zoom_level, zoom_level))
+	
 	# Disegna il labirinto principale con le modifiche dello stato
 	for y in range(maze.size()):
 		for x in range(maze[y].size()):
@@ -341,6 +392,10 @@ func _draw():
 	# Disegna il robot se si trova nella cella attualmente visualizzata
 	if robot != null and current_meta_cell_x == robot.current_meta_x and current_meta_cell_y == robot.current_meta_y and current_cell_x == robot.current_cell_x and current_cell_y == robot.current_cell_y:
 		draw_circle(robot.position, 8, Color.BLUE)
+	
+	# === PARTE 2: MINIMAPPA SENZA TRASFORMAZIONI ===
+	# Reset trasformazione per disegnare la minimappa normalmente
+	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 	
 	# Disegna la minimappa
 	var maze_width_pixels = (maze_width * 2 + 1) * cell_size
