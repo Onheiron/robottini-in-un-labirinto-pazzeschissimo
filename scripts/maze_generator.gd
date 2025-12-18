@@ -7,6 +7,7 @@ extends Node2D
 @export var cell_size: int = 20
 @export var seed_value: int = 0
 @export var meta_maze_size: int = 10
+@export_enum("DFS", "Junction") var robot_behavior: String = "DFS"
 
 var maze: Array = []
 var rng: RandomNumberGenerator
@@ -193,7 +194,7 @@ func setup_robot():
 	var maze_center = Vector2((maze_width * 2 + 1) / 2.0, (maze_height * 2 + 1) / 2.0)
 	var robot_spawn = Vector2((maze_center.x + 2) * cell_size, maze_center.y * cell_size)
 	
-	robot = Robot.new(robot_spawn, cell_size, start_meta_x, start_meta_y, start_cell_x, start_cell_y)
+	robot = Robot.new(robot_spawn, cell_size, start_meta_x, start_meta_y, start_cell_x, start_cell_y, robot_behavior)
 
 func record_current_cell():
 	## Registra la cella corrente come visitata
@@ -317,7 +318,7 @@ func _draw():
 			else:
 				# Verifica se la tile è stata visitata
 				var is_visited = world_state.is_tile_visited(current_meta_cell_x, current_meta_cell_y, current_cell_x, current_cell_y, x, y)
-				color = Color(0.6, 1.0, 0.6) if is_visited else Color(1.0, 1.0, 0.8)  # Verde chiaro vs giallo
+				color = Color(0.6, 1.0, 0.6) if is_visited else Color.WHITE  # Verde chiaro vs bianco
 			
 			var rect = Rect2(x * cell_size, y * cell_size, cell_size, cell_size)
 			draw_rect(rect, color)
