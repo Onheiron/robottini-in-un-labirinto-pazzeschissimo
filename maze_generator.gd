@@ -174,7 +174,7 @@ func generate_current_cell_maze():
 	eller_algorithm_for_cell(cell_rng)
 	
 	# Aggiungi aperture nei bordi in base alle connessioni del meta-labirinto
-	add_border_openings()
+	add_border_openings(cell_rng)
 	
 	print("Labirinto cella (", current_cell_x, ", ", current_cell_y, ") generato con seed: ", cell_seed)
 
@@ -193,28 +193,28 @@ func has_meta_connection(dx: int, dy: int) -> bool:
 		return target_pos in meta_maze_connections[current_pos]
 	return false
 
-func add_border_openings():
+func add_border_openings(cell_rng: RandomNumberGenerator):
 	## Aggiunge aperture nei muri di confine in base alle connessioni
 	var mid = maze_width
 	
 	# Apertura a sinistra (ovest)
 	if has_meta_connection(-1, 0):
-		var opening_y = rng.randi_range(1, maze_height - 1) * 2 + 1
+		var opening_y = cell_rng.randi_range(1, maze_height - 1) * 2 + 1
 		maze[opening_y][0] = CellType.PATH
 	
 	# Apertura a destra (est)
 	if has_meta_connection(1, 0):
-		var opening_y = rng.randi_range(1, maze_height - 1) * 2 + 1
+		var opening_y = cell_rng.randi_range(1, maze_height - 1) * 2 + 1
 		maze[opening_y][maze_width * 2] = CellType.PATH
 	
 	# Apertura in alto (nord)
 	if has_meta_connection(0, -1):
-		var opening_x = rng.randi_range(1, maze_width - 1) * 2 + 1
+		var opening_x = cell_rng.randi_range(1, maze_width - 1) * 2 + 1
 		maze[0][opening_x] = CellType.PATH
 	
 	# Apertura in basso (sud)
 	if has_meta_connection(0, 1):
-		var opening_x = rng.randi_range(1, maze_width - 1) * 2 + 1
+		var opening_x = cell_rng.randi_range(1, maze_width - 1) * 2 + 1
 		maze[maze_height * 2][opening_x] = CellType.PATH
 
 func eller_algorithm_for_cell(cell_rng: RandomNumberGenerator):
