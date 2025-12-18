@@ -47,11 +47,19 @@ var pan_start_mouse: Vector2
 var pan_start_offset: Vector2
 
 # Texture base robotica
-var robot_base_texture: Texture2D
+var robot_base_frames: Array[Texture2D] = []
+var robot_base_current_frame: int = 0
+var robot_base_anim_timer: float = 0.0
+var robot_base_anim_speed: float = 0.25  # Secondi per frame
 
 func _ready():
-	# Carica la texture della base robotica
-	robot_base_texture = load("res://assets/robot_base.svg")
+	# Carica i frame dell'animazione della base robotica
+	robot_base_frames = [
+		load("res://assets/robot_base_0.svg"),
+		load("res://assets/robot_base_1.svg"),
+		load("res://assets/robot_base_2.svg"),
+		load("res://assets/robot_base_3.svg")
+	]
 	
 	minimap = Minimap.new()
 	minimap.meta_maze_size = meta_maze_size
@@ -80,6 +88,12 @@ func _ready():
 	draw_maze()
 
 func _process(_delta):
+	# Anima la base robotica
+	robot_base_anim_timer += _delta
+	if robot_base_anim_timer >= robot_base_anim_speed:
+		robot_base_anim_timer = 0.0
+		robot_base_current_frame = (robot_base_current_frame + 1) % robot_base_frames.size()
+	
 	# Interpola zoom verso target per effetto fluido
 	if abs(zoom_level - zoom_target) > 0.001:
 		var mouse_pos = get_local_mouse_position()
@@ -405,12 +419,12 @@ func _draw():
 	var objects = world_state.get_objects_in_cell(current_meta_cell_x, current_meta_cell_y, current_cell_x, current_cell_y)
 	for obj in objects:
 		if obj["type"] == "spawn_circle":
-			# Disegna la base robotica invece del cerchio
-			if robot_base_texture:
-				var texture_size = Vector2(64, 80)  # Dimensione della texture (più alta)
-				# Centro l'SVG rispetto al suo centro geometrico (texture_size / 2)
+			# Disegna la base robotica animata
+			if robot_base_frames.size() > 0:
+				var current_texture = robot_base_frames[robot_base_current_frame]
+				var texture_size = Vector2(64, 80)
 				var pos = obj["position"] - texture_size / 2
-				draw_texture_rect(robot_base_texture, Rect2(pos, texture_size), false)
+				draw_texture_rect(current_texture, Rect2(pos, texture_size), false)
 		elif obj["type"] == "junction":
 			# Disegna snodi con verde scuro
 			var junction_rect = Rect2(obj["position"].x * cell_size, obj["position"].y * cell_size, cell_size, cell_size)
