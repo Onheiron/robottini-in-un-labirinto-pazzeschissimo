@@ -4,6 +4,7 @@ extends Node
 ## Gestisce la visualizzazione della minimappa
 
 var visited_cells: Dictionary = {}
+var faction_bases: Dictionary = {}  # Memorizza le posizioni delle basi delle fazioni
 var cell_size: int = 6
 var padding: int = 20
 var wall_thickness: int = 3
@@ -15,6 +16,11 @@ func record_cell(meta_x: int, meta_y: int, cell_x: int, cell_y: int, openings: D
 	
 	if not visited_cells.has(cell_key):
 		visited_cells[cell_key] = openings.duplicate()
+
+func record_faction_base(meta_x: int, meta_y: int, cell_x: int, cell_y: int, color: Color, is_player: bool):
+	## Registra la posizione di una base di fazione
+	var cell_key = Vector3i(meta_x, meta_y, cell_x * 10 + cell_y)
+	faction_bases[cell_key] = {"color": color, "is_player": is_player}
 
 func draw_minimap(canvas: Node2D, maze_width_pixels: int, current_meta_x: int, current_meta_y: int, current_x: int, current_y: int):
 	## Disegna la minimappa completa
@@ -43,6 +49,18 @@ func draw_minimap(canvas: Node2D, maze_width_pixels: int, current_meta_x: int, c
 						_draw_cell(canvas, pos_x, pos_y, visited_cells[cell_key])
 					else:
 						canvas.draw_rect(Rect2(pos_x, pos_y, cell_size, cell_size), Color.DARK_GRAY)
+					
+					# Disegna indicatore base fazione se presente
+					if faction_bases.has(cell_key):
+						var base_info = faction_bases[cell_key]
+						var center = Vector2(pos_x + cell_size / 2.0, pos_y + cell_size / 2.0)
+						if base_info["is_player"]:
+							# Base del giocatore: quadrato verde
+							var rect_size = cell_size * 0.6
+							canvas.draw_rect(Rect2(center.x - rect_size/2, center.y - rect_size/2, rect_size, rect_size), Color.GREEN)
+						else:
+							# Basi nemiche: cerchio con colore della fazione
+							canvas.draw_circle(center, cell_size * 0.3, base_info["color"])
 					
 					# Evidenzia la cella corrente
 					if meta_x == current_meta_x and meta_y == current_meta_y and cell_x == current_x and cell_y == current_y:

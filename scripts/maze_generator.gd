@@ -31,6 +31,9 @@ var world_state: WorldState
 # Robot esploratore
 var robot: Robot
 
+# Faction manager
+var faction_manager: FactionManager
+
 # Coordinate iniziali
 var start_meta_x: int
 var start_meta_y: int
@@ -66,6 +69,14 @@ func _ready():
 	
 	world_state = WorldState.new()
 	
+	# Inizializza faction manager
+	faction_manager = FactionManager.new(seed_value)
+	print("=== FAZIONI SELEZIONATE ===")
+	print("Fazione giocatore: ", faction_manager.get_player_faction().id, " (", faction_manager.get_player_faction().color, ")")
+	for faction in faction_manager.get_other_factions():
+		print("Fazione nemica: ", faction.id, " (", faction.color, ")")
+	print("==========================")
+	
 	generate_meta_meta_maze()
 	select_random_starting_meta_cell()
 	generate_meta_maze()
@@ -77,8 +88,11 @@ func _ready():
 	start_cell_x = current_cell_x
 	start_cell_y = current_cell_y
 	
-	# Crea area di spawn con cerchio rosso
+	# Crea area di spawn con cerchio rosso (player faction base)
 	setup_spawn_area()
+	
+	# Posiziona le basi di tutte le fazioni
+	setup_faction_bases()
 	
 	# Crea il robot esploratore
 	setup_robot()
@@ -273,9 +287,65 @@ func setup_spawn_area():
 	var clear_area_size = Vector2(4, 4)  # In unità di griglia
 	world_state.clear_area(start_meta_x, start_meta_y, start_cell_x, start_cell_y, maze_center, clear_area_size)
 	
-	# Piazza il cerchio rosso al centro (48x48 pixel)
+	# Piazza il cerchio rosso al centro (48x48 pixel) - ora è la base della fazione del giocatore
 	var circle_position = Vector2(maze_center.x * cell_size, maze_center.y * cell_size)
-	world_state.place_object(start_meta_x, start_meta_y, start_cell_x, start_cell_y, circle_position, "spawn_circle", {"radius": 24, "color": Color.RED})
+	var player_faction = faction_manager.get_player_faction()
+	world_state.place_object(start_meta_x, start_meta_y, start_cell_x, start_cell_y, circle_position, "faction_base", {
+		"radius": 24, 
+		"color": player_faction.color,
+		"faction_id": player_faction.id
+	})
+	
+	# Salva la posizione della base del giocatore
+	player_faction.base_position = Vector2i(
+		start_meta_x * meta_maze_size + start_cell_x,
+		start_meta_y * meta_maze_size + start_cell_y
+	)
+	
+	# Registra nella minimappa
+	minimap.record_faction_base(start_meta_x, start_meta_y, start_cell_x, start_cell_y, player_faction.color, true)
+
+func setup_faction_bases():
+	## Posiziona le basi delle altre fazioni nel labirinto
+	var occupied_cells = {}
+	
+	# La posizione del giocatore è già occupata (area ridotta)
+	var player_pos = faction_manager.get_player_faction().base_position
+	var clear_radius = 4
+	for x in range(-clear_radius, clear_radius):
+		for y in range(-clear_radius, clear_radius):
+			occupied_cells[Vector2i(player_pos.x + x, player_pos.y + y)] = true
+	
+	# Calcola dimensioni totali del labirinto (meta_maze_size x meta_maze_size celle, ognuna di meta_maze_size x meta_maze_size)
+	var total_maze_size = meta_maze_size * meta_maze_size
+	
+	# Assegna posizioni alle altre fazioni
+	faction_manager.assign_base_positions(total_maze_size, total_maze_size, occupied_cells)
+	
+	# Crea le basi delle altre fazioni
+	for faction in faction_manager.get_other_factions():
+		var global_pos = faction.base_position
+		
+		# Converti posizione globale in coordinate gerarchiche
+		var meta_x = global_pos.x / meta_maze_size
+		var meta_y = global_pos.y / meta_maze_size
+		var cell_x = global_pos.x % meta_maze_size
+		var cell_y = global_pos.y % meta_maze_size
+		
+		# Calcola posizione nel labirinto locale (centro della cella)
+		var maze_center = Vector2((maze_width * 2 + 1) / 2.0, (maze_height * 2 + 1) / 2.0)
+		var base_position = Vector2(maze_center.x * cell_size, maze_center.y * cell_size)
+		
+		# Crea area sgombra e piazza la base
+		world_state.clear_area(meta_x, meta_y, cell_x, cell_y, maze_center, Vector2(4, 4))
+		world_state.place_object(meta_x, meta_y, cell_x, cell_y, base_position, "faction_base", {
+			"radius": 24,
+			"color": faction.color,
+			"faction_id": faction.id
+		})
+		
+		# Registra nella minimappa
+		minimap.record_faction_base(meta_x, meta_y, cell_x, cell_y, faction.color, false)
 
 func setup_robot():
 	## Crea il robot esploratore vicino alla base
@@ -418,8 +488,27 @@ func _draw():
 	# Disegna gli oggetti piazzati in questa cella
 	var objects = world_state.get_objects_in_cell(current_meta_cell_x, current_meta_cell_y, current_cell_x, current_cell_y)
 	for obj in objects:
-		if obj["type"] == "spawn_circle":
-			# Disegna la base robotica animata
+		if obj["type"] == "faction_base":
+			# Disegna la base della fazione
+			var faction_id = obj.get("faction_id", "")
+			var is_player = faction_manager.get_player_faction().id == faction_id
+			
+			if is_player:
+				# Base del giocatore: usa l'animazione robotica
+				if robot_base_frames.size() > 0:
+					var current_texture = robot_base_frames[robot_base_current_frame]
+					var texture_size = Vector2(64, 80)
+					var pos = obj["position"] - texture_size / 2
+					draw_texture_rect(current_texture, Rect2(pos, texture_size), false)
+			else:
+				# Basi nemiche: disegna cerchio colorato
+				var radius = obj.get("radius", 24)
+				var color = obj.get("color", Color.RED)
+				draw_circle(obj["position"], radius, color)
+				# Bordo più scuro
+				draw_arc(obj["position"], radius, 0, TAU, 32, color.darkened(0.3), 2.0)
+		elif obj["type"] == "spawn_circle":
+			# Retrocompatibilità (non dovrebbe più essere usato)
 			if robot_base_frames.size() > 0:
 				var current_texture = robot_base_frames[robot_base_current_frame]
 				var texture_size = Vector2(64, 80)
