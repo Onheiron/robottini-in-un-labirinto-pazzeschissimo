@@ -34,6 +34,9 @@ var robot: Robot
 # Faction manager
 var faction_manager: FactionManager
 
+# Biome manager
+var biome_manager: BiomeManager
+
 # Coordinate iniziali
 var start_meta_x: int
 var start_meta_y: int
@@ -76,6 +79,10 @@ func _ready():
 	for faction in faction_manager.get_other_factions():
 		print("Fazione nemica: ", faction.id, " (", faction.color, ")")
 	print("==========================")
+	
+	# Inizializza biome manager
+	biome_manager = BiomeManager.new(seed_value)
+	minimap.biome_manager = biome_manager  # Collega biome manager alla minimap
 	
 	generate_meta_meta_maze()
 	select_random_starting_meta_cell()
@@ -473,10 +480,16 @@ func _draw():
 			if is_removed:
 				cell_type = MazeBuilder.CellType.PATH
 			
+			# Calcola colore del bioma per questa cella
+			var global_x = current_meta_cell_x * meta_maze_size + current_cell_x
+			var global_y = current_meta_cell_y * meta_maze_size + current_cell_y
+			var biome_color = biome_manager.get_dominant_biome_color(global_x, global_y)
+			
 			# Colora diversamente le tile visitate dal robot
 			var color: Color
 			if cell_type == MazeBuilder.CellType.WALL:
-				color = Color.BLACK
+				# Muri: usa colore del bioma
+				color = biome_color.darkened(0.3)
 			else:
 				# Verifica se la tile è stata visitata
 				var is_visited = world_state.is_tile_visited(current_meta_cell_x, current_meta_cell_y, current_cell_x, current_cell_y, x, y)

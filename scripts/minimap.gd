@@ -5,6 +5,7 @@ extends Node
 
 var visited_cells: Dictionary = {}
 var faction_bases: Dictionary = {}  # Memorizza le posizioni delle basi delle fazioni
+var biome_manager: BiomeManager = null  # Riferimento al biome manager
 var cell_size: int = 6
 var padding: int = 20
 var wall_thickness: int = 3
@@ -46,9 +47,16 @@ func draw_minimap(canvas: Node2D, maze_width_pixels: int, current_meta_x: int, c
 					var pos_y = base_y + cell_y * cell_size
 					
 					if visited_cells.has(cell_key):
-						_draw_cell(canvas, pos_x, pos_y, visited_cells[cell_key])
+						_draw_cell(canvas, pos_x, pos_y, visited_cells[cell_key], meta_x, meta_y, cell_x, cell_y)
 					else:
-						canvas.draw_rect(Rect2(pos_x, pos_y, cell_size, cell_size), Color.DARK_GRAY)
+						# Cella non visitata: mostra sfondo con colore del bioma
+						if biome_manager != null:
+							var global_x = meta_x * meta_maze_size + cell_x
+							var global_y = meta_y * meta_maze_size + cell_y
+							var biome_color = biome_manager.get_dominant_biome_color(global_x, global_y)
+							canvas.draw_rect(Rect2(pos_x, pos_y, cell_size, cell_size), biome_color.darkened(0.5))
+						else:
+							canvas.draw_rect(Rect2(pos_x, pos_y, cell_size, cell_size), Color.DARK_GRAY)
 					
 					# Disegna indicatore base fazione se presente
 					if faction_bases.has(cell_key):
@@ -70,19 +78,26 @@ func draw_minimap(canvas: Node2D, maze_width_pixels: int, current_meta_x: int, c
 			if meta_x == current_meta_x and meta_y == current_meta_y:
 				canvas.draw_rect(Rect2(base_x, base_y, section_size, section_size), Color.GREEN, false, 2)
 
-func _draw_cell(canvas: Node2D, x: int, y: int, openings: Dictionary):
+func _draw_cell(canvas: Node2D, x: int, y: int, openings: Dictionary, meta_x: int, meta_y: int, cell_x: int, cell_y: int):
 	## Disegna una singola cella con le sue aperture
 	canvas.draw_rect(Rect2(x, y, cell_size, cell_size), Color.WHITE)
 	
+	# Ottieni il colore del bioma per i muri
+	var wall_color = Color.BLACK
+	if biome_manager != null:
+		var global_x = meta_x * meta_maze_size + cell_x
+		var global_y = meta_y * meta_maze_size + cell_y
+		wall_color = biome_manager.get_dominant_biome_color(global_x, global_y).darkened(0.3)
+	
 	# Disegna i muri tranne dove ci sono aperture
 	if not openings["north"]:
-		canvas.draw_line(Vector2(x, y), Vector2(x + cell_size, y), Color.BLACK, wall_thickness)
+		canvas.draw_line(Vector2(x, y), Vector2(x + cell_size, y), wall_color, wall_thickness)
 	
 	if not openings["south"]:
-		canvas.draw_line(Vector2(x, y + cell_size), Vector2(x + cell_size, y + cell_size), Color.BLACK, wall_thickness)
+		canvas.draw_line(Vector2(x, y + cell_size), Vector2(x + cell_size, y + cell_size), wall_color, wall_thickness)
 	
 	if not openings["west"]:
-		canvas.draw_line(Vector2(x, y), Vector2(x, y + cell_size), Color.BLACK, wall_thickness)
+		canvas.draw_line(Vector2(x, y), Vector2(x, y + cell_size), wall_color, wall_thickness)
 	
 	if not openings["east"]:
-		canvas.draw_line(Vector2(x + cell_size, y), Vector2(x + cell_size, y + cell_size), Color.BLACK, wall_thickness)
+		canvas.draw_line(Vector2(x + cell_size, y), Vector2(x + cell_size, y + cell_size), wall_color, wall_thickness)
