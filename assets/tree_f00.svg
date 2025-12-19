@@ -1,0 +1,24 @@
+<!-- Tree f00 - Red themed autumn maple -->
+<svg width="32" height="48" viewBox="0 0 32 48" xmlns="http://www.w3.org/2000/svg">
+  <!-- Thick trunk -->
+  <rect x="13" y="24" width="6" height="24" rx="2" fill="#6B4423"/>
+  <rect x="14" y="25" width="4" height="22" rx="1.5" fill="#8B5A2B"/>
+  
+  <!-- Large rounded canopy -->
+  <ellipse cx="16" cy="18" rx="12" ry="10" fill="#5A4A2A"/>
+  <ellipse cx="16" cy="16" rx="11" ry="9" fill="#6B5A3A"/>
+  
+  <!-- Red maple leaves scattered -->
+  <path d="M 10 14 L 12 16 L 10 18 L 8 16 Z" fill="#FF0000"/>
+  <path d="M 16 10 L 18 12 L 16 14 L 14 12 Z" fill="#FF0000"/>
+  <path d="M 22 14 L 24 16 L 22 18 L 20 16 Z" fill="#FF0000"/>
+  <path d="M 12 20 L 14 22 L 12 24 L 10 22 Z" fill="#DD0000"/>
+  <path d="M 20 20 L 22 22 L 20 24 L 18 22 Z" fill="#DD0000"/>
+  <path d="M 8 18 L 10 20 L 8 22 L 6 20 Z" fill="#CC0000"/>
+  <path d="M 24 18 L 26 20 L 24 22 L 22 20 Z" fill="#CC0000"/>
+  <path d="M 16 22 L 18 24 L 16 26 L 14 24 Z" fill="#DD0000"/>
+  
+  <!-- Falling leaves -->
+  <path d="M 6 28 L 7 29 L 6 30 L 5 29 Z" fill="#FF0000" opacity="0.8"/>
+  <path d="M 26 32 L 27 33 L 26 34 L 25 33 Z" fill="#DD0000" opacity="0.8"/>
+</svg>

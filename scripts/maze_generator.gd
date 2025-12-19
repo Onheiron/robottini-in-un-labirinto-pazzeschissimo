@@ -58,6 +58,9 @@ var robot_base_current_frame: int = 0
 var robot_base_anim_timer: float = 0.0
 var robot_base_anim_speed: float = 0.25  # Secondi per frame
 
+# Texture alberi per biomi
+var tree_textures: Dictionary = {}
+
 func _ready():
 	# Carica i frame dell'animazione della base robotica
 	robot_base_frames = [
@@ -66,6 +69,22 @@ func _ready():
 		load("res://assets/robot_base_2.svg"),
 		load("res://assets/robot_base_3.svg")
 	]
+	
+	# Carica le texture degli alberi per ogni bioma
+	tree_textures = {
+		"fa0": load("res://assets/tree_fa0.svg"),
+		"f0a": load("res://assets/tree_f0a.svg"),
+		"af0": load("res://assets/tree_af0.svg"),
+		"0fa": load("res://assets/tree_0fa.svg"),
+		"a0f": load("res://assets/tree_a0f.svg"),
+		"0af": load("res://assets/tree_0af.svg"),
+		"f00": load("res://assets/tree_f00.svg"),
+		"0f0": load("res://assets/tree_0f0.svg"),
+		"00f": load("res://assets/tree_00f.svg"),
+		"f0f": load("res://assets/tree_f0f.svg"),
+		"0ff": load("res://assets/tree_0ff.svg"),
+		"ff0": load("res://assets/tree_ff0.svg")
+	}
 	
 	minimap = Minimap.new()
 	minimap.meta_maze_size = meta_maze_size
@@ -469,6 +488,9 @@ func _draw():
 	# Applica trasformazione solo al labirinto
 	draw_set_transform(pan_offset, 0.0, Vector2(zoom_level, zoom_level))
 	
+	# Array per memorizzare le posizioni delle cime degli alberi da disegnare dopo
+	var tree_tops = []
+	
 	# Disegna il labirinto principale con le modifiche dello stato
 	for y in range(maze.size()):
 		for x in range(maze[y].size()):
@@ -502,6 +524,22 @@ func _draw():
 			
 			var rect = Rect2(x * cell_size, y * cell_size, cell_size, cell_size)
 			draw_rect(rect, color)
+			
+			# Disegna alberi sui muri
+			if cell_type == MazeBuilder.CellType.WALL:
+				# Usa il colore della tile per determinare quale albero usare
+				var wall_tile_color = biome_manager.get_tile_color(global_x, global_y, x, y)
+				var biome_id = biome_manager.get_biome_id_from_color(wall_tile_color)
+				
+				if biome_id != "":
+					# Verifica che il tree texture esista e sia caricato
+					var tree_texture = tree_textures.get(biome_id, null)
+					if tree_texture != null:
+						# Disegna l'albero completo per ora (debug)
+						var tree_size = Vector2(32, 48)
+						var tree_pos = Vector2(x * cell_size - 6, y * cell_size - 28)
+						draw_texture_rect(tree_texture, Rect2(tree_pos, tree_size), false)
+
 	
 	# Disegna gli oggetti piazzati in questa cella
 	var objects = world_state.get_objects_in_cell(current_meta_cell_x, current_meta_cell_y, current_cell_x, current_cell_y)

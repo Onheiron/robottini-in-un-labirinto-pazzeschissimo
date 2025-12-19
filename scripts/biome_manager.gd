@@ -129,6 +129,36 @@ func get_dominant_biome_color(x: int, y: int) -> Color:
 	
 	return Color.WHITE
 
+func get_dominant_biome_id(x: int, y: int) -> String:
+	## Returns the ID of the dominant biome in a cell
+	var biomes = get_cell_biomes(x, y)
+	if biomes.is_empty():
+		return ""
+	
+	# Find dominant biome
+	var max_percentage = 0.0
+	var dominant_id = ""
+	for biome_id in biomes.keys():
+		if biomes[biome_id] > max_percentage:
+			max_percentage = biomes[biome_id]
+			dominant_id = biome_id
+	
+	return dominant_id
+
+func get_biome_id_from_color(color: Color) -> String:
+	## Returns the biome ID that best matches a given color
+	var min_distance = 999999.0
+	var closest_biome_id = ""
+	
+	for biome in active_biomes:
+		# Calcola distanza euclidea nel RGB space
+		var distance = abs(color.r - biome.color.r) + abs(color.g - biome.color.g) + abs(color.b - biome.color.b)
+		if distance < min_distance:
+			min_distance = distance
+			closest_biome_id = biome.id
+	
+	return closest_biome_id
+
 func get_mixed_biome_color(x: int, y: int) -> Color:
 	## Returns a blended color based on all biome percentages in a cell
 	var biomes = get_cell_biomes(x, y)
