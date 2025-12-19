@@ -22,6 +22,14 @@ var move_target: Vector2
 var move_start: Vector2
 var move_progress: float = 0.0
 
+# Animazione sprite
+var sprite_frames: Array[Texture2D] = []
+var current_frame: int = 0
+var anim_timer: float = 0.0
+var anim_speed: float = 0.12  # Secondi per frame
+
+# Area di spawn (dove non lasciare snodi)
+
 # Area di spawn (dove non lasciare snodi)
 var spawn_center: Vector2i
 var spawn_radius: int = 2  # 64px / 20px cell_size ≈ 3 celle di raggio
@@ -38,6 +46,15 @@ func _init(start_pos: Vector2, cell_size: int, meta_x: int, meta_y: int, cell_x:
 	position = start_pos
 	maze_cell_size = cell_size
 	spawn_center = Vector2i(int(start_pos.x / cell_size), int(start_pos.y / cell_size))
+	
+	# Carica i frame dell'animazione
+	sprite_frames = [
+		load("res://assets/robot_walk_0.svg"),
+		load("res://assets/robot_walk_1.svg"),
+		load("res://assets/robot_walk_2.svg"),
+		load("res://assets/robot_walk_3.svg")
+	]
+	
 	current_meta_x = meta_x
 	current_meta_y = meta_y
 	current_cell_x = cell_x
@@ -56,6 +73,14 @@ func get_grid_position() -> Vector2i:
 func update(delta: float, maze: Array, world_state) -> bool:
 	## Aggiorna lo stato del robot. Ritorna true se si è mosso
 	current_maze = maze
+	
+	# Anima il robot quando è in movimento
+	if is_moving:
+		anim_timer += delta
+		if anim_timer >= anim_speed:
+			anim_timer = 0.0
+			current_frame = (current_frame + 1) % sprite_frames.size()
+	
 	if is_moving:
 		return _update_movement(delta, world_state)
 	elif move_queue.size() > 0:

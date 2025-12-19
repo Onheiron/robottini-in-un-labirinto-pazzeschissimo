@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24" height="36" viewBox="0 0 24 36" xmlns="http://www.w3.org/2000/svg">
+  <!-- Shadow -->
+  <ellipse cx="12" cy="33" rx="8" ry="2" fill="#00000030"/>
+  
+  <!-- Left leg - lifted with corrugated tube effect -->
+  <path d="M 7 24 Q 7 25 7 26.5 L 7 27.5" fill="none" stroke="#5A6169" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="7" cy="25" r="1.5" fill="#374151"/>
+  <!-- Corrugation lines -->
+  <path d="M 6.2 24.5 Q 7 24.5 7.8 24.5" fill="none" stroke="#8B92A0" stroke-width="0.5" opacity="0.8"/>
+  <path d="M 6.5 25.5 Q 7 25.5 7.5 25.5" fill="none" stroke="#8B92A0" stroke-width="0.5" opacity="0.8"/>
+  <path d="M 6.5 26.5 Q 7 26.5 7.5 26.5" fill="none" stroke="#8B92A0" stroke-width="0.5" opacity="0.8"/>
+  <path d="M 6.7 27.2 Q 7 27.2 7.3 27.2" fill="none" stroke="#8B92A0" stroke-width="0.5" opacity="0.8"/>
+  
+  <!-- Left shoe with flat sole - lifted -->
+  <rect x="4.5" y="28" width="5" height="2" rx="0.3" fill="#7C2D12"/>
+  <path d="M 4.5 28 Q 4.5 26.5 6 26.3 L 8 26.3 Q 9.5 26.5 9.5 28 Z" fill="#DC2626"/>
+  <path d="M 4.5 28 Q 4.5 26.8 6 26.7 L 8 26.7 Q 9.5 26.8 9.5 28 Z" fill="#EF4444"/>
+  <ellipse cx="8.5" cy="27" rx="1" ry="0.8" fill="#FFFFFF" opacity="0.3"/>
+  <line x1="5.5" y1="27.3" x2="8.5" y2="27.3" stroke="#B91C1C" stroke-width="0.5"/>
+  
+  <!-- Right leg extended forward - bent knee with corrugated tube -->
+  <path d="M 17 23 Q 17 25 16 27 L 16 29" fill="none" stroke="#5A6169" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="17" cy="25" r="1.5" fill="#374151"/>
+  <!-- Corrugation lines -->
+  <path d="M 16.2 23.5 Q 17 23.5 17.8 23.5" fill="none" stroke="#6B7280" stroke-width="0.4" opacity="0.7"/>
+  <path d="M 16.5 24.2 Q 17 24.2 17.5 24.2" fill="none" stroke="#6B7280" stroke-width="0.4" opacity="0.7"/>
+  <path d="M 15.8 25.8 Q 16.3 25.8 16.8 25.8" fill="none" stroke="#6B7280" stroke-width="0.4" opacity="0.7"/>
+  <path d="M 15.5 26.5 Q 16 26.5 16.5 26.5" fill="none" stroke="#6B7280" stroke-width="0.4" opacity="0.7"/>
+  <path d="M 15.3 27.5 Q 15.8 27.5 16.3 27.5" fill="none" stroke="#6B7280" stroke-width="0.4" opacity="0.7"/>
+  <path d="M 15.2 28.2 Q 15.6 28.2 16 28.2" fill="none" stroke="#6B7280" stroke-width="0.4" opacity="0.7"/>
+  
+  <!-- Right shoe with flat sole -->
+  <rect x="13.5" y="31" width="5" height="2" fill="#7C2D12"/>
+  <path d="M 13.5 31 Q 13.5 29.5 15 29.5 L 17 29.5 Q 18.5 29.5 18.5 31 Z" fill="#DC2626"/>
+  <path d="M 13.5 31 Q 13.5 30 15 30 L 17 30 Q 18.5 30 18.5 31 Z" fill="#EF4444"/>
+  <ellipse cx="17.5" cy="30.5" rx="1" ry="0.8" fill="#FFFFFF" opacity="0.3"/>
+  <line x1="14.5" y1="30.5" x2="17.5" y2="30.5" stroke="#B91C1C" stroke-width="0.5"/>
+  
+  <!-- Main body - metallic sphere with more detail -->
+  <defs>
+    <radialGradient id="metalGradient">
+      <stop offset="0%" style="stop-color:#B8C0D0;stop-opacity:1" />
+      <stop offset="40%" style="stop-color:#8B92A0;stop-opacity:1" />
+      <stop offset="70%" style="stop-color:#6B7280;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4B5563;stop-opacity:1" />
+    </radialGradient>
+    <radialGradient id="shine">
+      <stop offset="0%" style="stop-color:#FFFFFF;stop-opacity:0.6" />
+      <stop offset="50%" style="stop-color:#FFFFFF;stop-opacity:0" />
+    </radialGradient>
+  </defs>
+  
+  <circle cx="12" cy="15.5" r="9.5" fill="url(#metalGradient)" stroke="#374151" stroke-width="1"/>
+  
+  <!-- Shine highlight -->
+  <ellipse cx="9" cy="11.5" rx="4" ry="5" fill="url(#shine)"/>
+  
+  <!-- Central band curved -->
+  <path d="M 3.5 15.5 Q 12 14 20.5 15.5" stroke="#374151" stroke-width="2" fill="none"/>
+  <path d="M 3.5 15.5 Q 12 17 20.5 15.5" stroke="#374151" stroke-width="2" fill="none"/>
+  
+  <!-- Small bolts around central band -->
+  <g>
+    <circle cx="5" cy="15.5" r="0.8" fill="#2D3338"/>
+    <circle cx="5" cy="15.5" r="0.5" fill="#374151"/>
+    <line x1="4.7" y1="15.5" x2="5.3" y2="15.5" stroke="#1F2937" stroke-width="0.2"/>
+  </g>
+  <g>
+    <circle cx="8.5" cy="14.8" r="0.8" fill="#2D3338"/>
+    <circle cx="8.5" cy="14.8" r="0.5" fill="#374151"/>
+    <line x1="8.2" y1="14.8" x2="8.8" y2="14.8" stroke="#1F2937" stroke-width="0.2"/>
+  </g>
+  <g>
+    <circle cx="12" cy="14.5" r="0.8" fill="#2D3338"/>
+    <circle cx="12" cy="14.5" r="0.5" fill="#374151"/>
+    <line x1="11.7" y1="14.5" x2="12.3" y2="14.5" stroke="#1F2937" stroke-width="0.2"/>
+  </g>
+  <g>
+    <circle cx="15.5" cy="14.8" r="0.8" fill="#2D3338"/>
+    <circle cx="15.5" cy="14.8" r="0.5" fill="#374151"/>
+    <line x1="15.2" y1="14.8" x2="15.8" y2="14.8" stroke="#1F2937" stroke-width="0.2"/>
+  </g>
+  <g>
+    <circle cx="19" cy="15.5" r="0.8" fill="#2D3338"/>
+    <circle cx="19" cy="15.5" r="0.5" fill="#374151"/>
+    <line x1="18.7" y1="15.5" x2="19.3" y2="15.5" stroke="#1F2937" stroke-width="0.2"/>
+  </g>
+  <g>
+    <circle cx="12" cy="16.5" r="0.8" fill="#2D3338"/>
+    <circle cx="12" cy="16.5" r="0.5" fill="#374151"/>
+    <line x1="11.7" y1="16.5" x2="12.3" y2="16.5" stroke="#1F2937" stroke-width="0.2"/>
+  </g>
+  
+  <!-- Wind-up key on back - butterfly shape, yellow -->
+  <g transform="translate(17, 15.5)">
+    <!-- Key shaft -->
+    <rect x="0" y="-0.8" width="1.5" height="1.6" rx="0.3" fill="#6B7280" stroke="#4B5563" stroke-width="0.5"/>
+    <!-- Butterfly wings -->
+    <path d="M 1.5 -2.5 Q 3 -2.5 4 -1.2 Q 3 0 1.5 0 Q 3 0 4 1.2 Q 3 2.5 1.5 2.5 L 1.5 -2.5 Z" fill="#FCD34D" stroke="#F59E0B" stroke-width="0.8"/>
+    <path d="M 1.5 -2.5 L 1.5 2.5" stroke="#F59E0B" stroke-width="0.5"/>
+    <circle cx="3" cy="-1.2" r="0.4" fill="#F59E0B"/>
+    <circle cx="3" cy="1.2" r="0.4" fill="#F59E0B"/>
+  </g>
+  
+  <!-- Antenna on head - shorter -->
+  <line x1="12" y1="6" x2="12" y2="4" stroke="#5A6169" stroke-width="1.8" stroke-linecap="round"/>
+  <circle cx="12" cy="4" r="0.8" fill="#4B5563"/>
+  <circle cx="12" cy="3.5" r="1.5" fill="#DC2626"/>
+  <circle cx="12" cy="3.5" r="1.1" fill="#EF4444"/>
+  <ellipse cx="11.3" cy="3.3" rx="0.5" ry="0.3" fill="#FFFFFF" opacity="0.4"/>
+</svg>

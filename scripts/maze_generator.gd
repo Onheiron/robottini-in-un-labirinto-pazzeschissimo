@@ -432,7 +432,11 @@ func _draw():
 	
 	# Disegna il robot se si trova nella cella attualmente visualizzata
 	if robot != null and current_meta_cell_x == robot.current_meta_x and current_meta_cell_y == robot.current_meta_y and current_cell_x == robot.current_cell_x and current_cell_y == robot.current_cell_y:
-		draw_circle(robot.position, 8, Color.BLUE)
+		if robot.sprite_frames.size() > 0:
+			var robot_texture = robot.sprite_frames[robot.current_frame]
+			var robot_size = Vector2(24, 32)
+			var robot_pos = robot.position - robot_size / 2
+			draw_texture_rect(robot_texture, Rect2(robot_pos, robot_size), false)
 	
 	# === PARTE 2: MINIMAPPA SENZA TRASFORMAZIONI ===
 	# Reset trasformazione per disegnare la minimappa normalmente
