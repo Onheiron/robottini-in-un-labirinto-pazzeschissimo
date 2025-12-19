@@ -5,8 +5,9 @@ var active_biomes: Array[Biome] = []
 var game_seed: int
 var biome_grid: Array = []  # 100x100 grid, each cell = {biome_id: percentage}
 var grid_size: int = 100
-var noise: FastNoiseLite  # Noise per confini biomi
-var tile_noise: FastNoiseLite  # Noise per tile del pavimento
+var boundary_noise: FastNoiseLite  # Noise per variare i confini tra biomi
+var tile_selection_noise: FastNoiseLite  # Noise per scegliere QUALE bioma tra quelli nella cella
+var brightness_noise: FastNoiseLite  # Noise per variare la luminosità
 
 func _init(_seed: int = 0):
 	if _seed == 0:
@@ -14,17 +15,23 @@ func _init(_seed: int = 0):
 	else:
 		game_seed = _seed
 	
-	# Inizializza noise per confini biomi
-	noise = FastNoiseLite.new()
-	noise.seed = game_seed
-	noise.frequency = 0.15  # Aumentato per confini più frastagliati
-	noise.noise_type = FastNoiseLite.TYPE_PERLIN
+	# Noise per confini biomi (varia leggermente le distanze)
+	boundary_noise = FastNoiseLite.new()
+	boundary_noise.seed = game_seed
+	boundary_noise.frequency = 0.15
+	boundary_noise.noise_type = FastNoiseLite.TYPE_PERLIN
 	
-	# Inizializza noise per variazioni tile pavimento
-	tile_noise = FastNoiseLite.new()
-	tile_noise.seed = game_seed + 1000
-	tile_noise.frequency = 0.3  # Variazioni più fini per ogni tile
-	tile_noise.noise_type = FastNoiseLite.TYPE_SIMPLEX
+	# Noise per SELEZIONARE bioma tra quelli nella cella
+	tile_selection_noise = FastNoiseLite.new()
+	tile_selection_noise.seed = game_seed + 1000
+	tile_selection_noise.frequency = 0.05  # Ridotto per scatter più ampio
+	tile_selection_noise.noise_type = FastNoiseLite.TYPE_SIMPLEX
+	
+	# Noise per LUMINOSITÀ tile
+	brightness_noise = FastNoiseLite.new()
+	brightness_noise.seed = game_seed + 2000
+	brightness_noise.frequency = 0.4
+	brightness_noise.noise_type = FastNoiseLite.TYPE_SIMPLEX
 	
 	_select_biomes()
 	_initialize_grid()
@@ -72,21 +79,34 @@ func _generate_biome_distribution() -> void:
 			var cell_pos = Vector2i(x, y)
 			var influences = {}
 			
-			# Calculate inverse distance to each biome origin
+			# Calcola influenza per TUTTI i biomi
 			for biome in active_biomes:
 				var distance = _manhattan_distance(cell_pos, biome.origin)
 				if distance == 0:
-					# Cell is at origin, 100% this biome
+					# Cella all'origine, 100% questo bioma
 					influences[biome.id] = 1.0
 					break
 				else:
-					# Use inverse distance as influence
+					# Influenza inversamente proporzionale alla distanza
 					var base_influence = 1.0 / (distance + 1.0)
-					# Apply noise to make boundaries less rigid
-					var noise_value = noise.get_noise_2d(x, y)
-					# Noise is -1 to 1, usa un moltiplicatore più aggressivo per più scattering
-					var noise_multiplier = 1.0 + noise_value * 1.5
+					# Applica boundary_noise per variare i confini (MODERATAMENTE!)
+					var noise_value = boundary_noise.get_noise_2d(x, y)
+					# Limita il noise a ±30% per non invertire l'ordine
+					var noise_multiplier = 1.0 + noise_value * 0.3
 					influences[biome.id] = base_influence * noise_multiplier
+			
+			# DOPO aver applicato il noise, tieni solo i 3 biomi con PIÙ influenza
+			if influences.size() > 3:
+				var sorted_biomes = []
+				for biome_id in influences.keys():
+					sorted_biomes.append({"id": biome_id, "influence": influences[biome_id]})
+				sorted_biomes.sort_custom(func(a, b): return a["influence"] > b["influence"])
+				
+				# Tieni solo i top 3
+				var top_influences = {}
+				for i in range(min(3, sorted_biomes.size())):
+					top_influences[sorted_biomes[i]["id"]] = sorted_biomes[i]["influence"]
+				influences = top_influences
 			
 			# Normalize influences to percentages
 			var total_influence = 0.0
@@ -199,23 +219,29 @@ func get_tile_color(cell_x: int, cell_y: int, tile_x: int, tile_y: int) -> Color
 				base_color = biome.color
 				break
 	else:
-		# Mix di biomi: usa noise solo se ci sono almeno 2 biomi significativi (>15%)
+		# Mix di biomi: usa noise solo se ci sono almeno 2 biomi significativi
 		var significant_biomes = []
 		for biome_id in biomes.keys():
-			if biomes[biome_id] > 0.05:  # Ridotta soglia da 0.15 a 0.05 per più mix
+			# Solo biomi con almeno 20% di influenza = confini più stretti
+			if biomes[biome_id] > 0.20:
 				significant_biomes.append({"id": biome_id, "percentage": biomes[biome_id]})
 		
 		if significant_biomes.size() > 1:
-			# Usa noise per transizioni organiche tra biomi significativi
-			var mix_noise = noise.get_noise_2d(global_tile_x * 0.2, global_tile_y * 0.2)  # Aumentata frequenza da 0.05 a 0.2
-			# Normalizza noise a 0-1
-			var mix_value = (mix_noise + 1.0) / 2.0
+			# Usa tile_selection_noise per scegliere tra i biomi possibili
+			var selection_value = tile_selection_noise.get_noise_2d(global_tile_x, global_tile_y)
+			# Normalizza a 0-1
+			selection_value = (selection_value + 1.0) / 2.0
 			
-			# Mappa mix_value alle percentuali dei biomi significativi
+			# Calcola totale percentuali
+			var total_percentage = 0.0
+			for biome_data in significant_biomes:
+				total_percentage += biome_data["percentage"]
+			
+			# Seleziona bioma in base a percentuali cumulative
 			var accumulated = 0.0
 			for biome_data in significant_biomes:
 				accumulated += biome_data["percentage"]
-				if mix_value * significant_biomes.reduce(func(sum, b): return sum + b["percentage"], 0.0) <= accumulated:
+				if selection_value <= (accumulated / total_percentage):
 					for biome in active_biomes:
 						if biome.id == biome_data["id"]:
 							base_color = biome.color
@@ -235,10 +261,10 @@ func get_tile_color(cell_x: int, cell_y: int, tile_x: int, tile_y: int) -> Color
 					base_color = biome.color
 					break
 	
-	# Applica variazione di luminosità con tile_noise
-	var brightness_noise = tile_noise.get_noise_2d(global_tile_x, global_tile_y)
-	# brightness_noise è -1 a 1, normalizza a -0.1 a +0.1 per variazioni sottili
-	var brightness_variation = brightness_noise * 0.1
+	# Applica variazione di luminosità con brightness_noise (SEPARATO!)
+	var brightness_value = brightness_noise.get_noise_2d(global_tile_x, global_tile_y)
+	# brightness_value è -1 a 1, normalizza a -0.1 a +0.1 per variazioni sottili
+	var brightness_variation = brightness_value * 0.1
 	
 	# Schiarisci leggermente il colore base e applica variazione
 	var final_color = base_color.lightened(0.3)
