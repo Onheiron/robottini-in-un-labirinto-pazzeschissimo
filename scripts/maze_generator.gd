@@ -480,16 +480,18 @@ func _draw():
 			if is_removed:
 				cell_type = MazeBuilder.CellType.PATH
 			
-			# Calcola colore del bioma per questa cella
+			# Calcola coordinate globali
 			var global_x = current_meta_cell_x * meta_maze_size + current_cell_x
 			var global_y = current_meta_cell_y * meta_maze_size + current_cell_y
-			var biome_color = biome_manager.get_dominant_biome_color(global_x, global_y)
 			
 			# Colora diversamente le tile visitate dal robot
 			var color: Color
 			if cell_type == MazeBuilder.CellType.WALL:
-				# Muri: usa colore del bioma scurito
-				color = biome_color.darkened(0.3)
+				# Muri: usa lo stesso sistema del pavimento con noise
+				# così i muri seguono il colore del bioma locale
+				var wall_tile_color = biome_manager.get_tile_color(global_x, global_y, x, y)
+				# Scurisci per distinguerli dal pavimento
+				color = wall_tile_color.darkened(0.5)
 			else:
 				# Pavimento: usa noise per variare luminosità e mix di biomi
 				var tile_color = biome_manager.get_tile_color(global_x, global_y, x, y)
