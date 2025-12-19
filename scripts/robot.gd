@@ -49,10 +49,10 @@ func _init(start_pos: Vector2, cell_size: int, meta_x: int, meta_y: int, cell_x:
 	
 	# Carica i frame dell'animazione
 	sprite_frames = [
-		load("res://assets/robot_walk_0.svg"),
-		load("res://assets/robot_walk_1.svg"),
-		load("res://assets/robot_walk_2.svg"),
-		load("res://assets/robot_walk_3.svg")
+	load("res://assets/robots/robot_walk_0.svg"),
+	load("res://assets/robots/robot_walk_1.svg"),
+	load("res://assets/robots/robot_walk_2.svg"),
+	load("res://assets/robots/robot_walk_3.svg")
 	]
 	
 	current_meta_x = meta_x

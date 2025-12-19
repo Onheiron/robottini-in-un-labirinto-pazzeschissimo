@@ -65,17 +65,17 @@ var tree_top_textures: Dictionary = {}
 func _ready():
 	# Carica i frame dell'animazione della base robotica
 	robot_base_frames = [
-		load("res://assets/robot_base_0.svg"),
-		load("res://assets/robot_base_1.svg"),
-		load("res://assets/robot_base_2.svg"),
-		load("res://assets/robot_base_3.svg")
+	load("res://assets/robots/robot_base_0.svg"),
+	load("res://assets/robots/robot_base_1.svg"),
+	load("res://assets/robots/robot_base_2.svg"),
+	load("res://assets/robots/robot_base_3.svg")
 	]
 	
 	# Carica le texture degli alberi split (base e cima)
 	var biome_ids = ["fa0", "f0a", "af0", "0fa", "a0f", "0af", "f00", "0f0", "00f", "f0f", "0ff", "ff0"]
 	for biome_id in biome_ids:
-		tree_base_textures[biome_id] = load("res://assets/tree_" + biome_id + "_base.svg")
-		tree_top_textures[biome_id] = load("res://assets/tree_" + biome_id + "_top.svg")
+		tree_base_textures[biome_id] = load("res://assets/trees/tree_" + biome_id + "_base.svg")
+		tree_top_textures[biome_id] = load("res://assets/trees/tree_" + biome_id + "_top.svg")
 	
 	minimap = Minimap.new()
 	minimap.meta_maze_size = meta_maze_size
