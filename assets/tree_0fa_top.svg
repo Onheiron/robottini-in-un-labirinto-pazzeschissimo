@@ -1,0 +1,14 @@
+<!-- Tree 0fa_top - Cyan/turquoise themed conifer (chioma - parte superiore) -->
+<svg width="32" height="24" viewBox="0 0 32 24" xmlns="http://www.w3.org/2000/svg">
+  <!-- Triangular evergreen layers -->
+  <path d="M 16 8 L 8 20 L 24 20 Z" fill="#2D5A3A"/>
+  <path d="M 16 16 L 6 28 L 26 28 Z" fill="#3A6B47"/>
+  
+  <!-- Cyan/turquoise snow on branches -->
+  <path d="M 16 8 L 10 16 L 22 16 Z" fill="#00FFAA"/>
+  <path d="M 16 16 L 9 24 L 23 24 Z" fill="#00FFAA"/>
+  
+  <!-- Cyan lights/berries -->
+  <circle cx="12" cy="18" r="1.5" fill="#00FFAA"/>
+  <circle cx="20" cy="18" r="1.5" fill="#00FFAA"/>
+</svg>

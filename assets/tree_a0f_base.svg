@@ -1,0 +1,8 @@
+<!-- Tree a0f_base - Purple themed dead/twisted tree (trunk - parte inferiore) -->
+<svg width="32" height="24" viewBox="0 24 32 24" xmlns="http://www.w3.org/2000/svg">
+  <!-- Twisted trunk -->
+  <path d="M 16 48 Q 18 40 17 32 Q 15 24 16 24" stroke="#3A2A2A" stroke-width="4" fill="none"/>
+  
+  <!-- Purple glow around base -->
+  <ellipse cx="16" cy="46" rx="8" ry="2" fill="#AA00FF"/>
+</svg>

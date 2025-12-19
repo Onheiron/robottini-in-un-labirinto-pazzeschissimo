@@ -1,0 +1,19 @@
+<!-- Tree f0a_base - Pink/Magenta themed weeping willow (trunk - parte inferiore) -->
+<svg width="32" height="24" viewBox="0 24 32 24" xmlns="http://www.w3.org/2000/svg">
+  <!-- Trunk - thin and elegant -->
+  <path d="M 16 48 Q 14 40 15 30 Q 16 24 16 24" stroke="#654321" stroke-width="3" fill="none"/>
+  
+  <!-- Drooping branches with pink flowers -->
+  <path d="M 15 12 Q 10 18 8 26 Q 7 30 6 34" stroke="#3A5F3A" stroke-width="2" fill="none"/>
+  <path d="M 16 10 Q 12 16 10 24 Q 9 28 8 32" stroke="#3A5F3A" stroke-width="1.5" fill="none"/>
+  <path d="M 17 12 Q 22 18 24 26 Q 25 30 26 34" stroke="#3A5F3A" stroke-width="2" fill="none"/>
+  <path d="M 16 10 Q 20 16 22 24 Q 23 28 24 32" stroke="#3A5F3A" stroke-width="1.5" fill="none"/>
+  
+  <!-- Pink/magenta blossoms -->
+  <circle cx="8" cy="24" r="1.5" fill="#FF00AA"/>
+  <circle cx="10" cy="28" r="1.5" fill="#FF00AA"/>
+  <circle cx="7" cy="32" r="1.2" fill="#FF00AA"/>
+  <circle cx="24" cy="24" r="1.5" fill="#FF00AA"/>
+  <circle cx="22" cy="28" r="1.5" fill="#FF00AA"/>
+  <circle cx="25" cy="32" r="1.2" fill="#FF00AA"/>
+</svg>

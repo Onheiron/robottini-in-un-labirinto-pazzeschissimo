@@ -58,8 +58,9 @@ var robot_base_current_frame: int = 0
 var robot_base_anim_timer: float = 0.0
 var robot_base_anim_speed: float = 0.25  # Secondi per frame
 
-# Texture alberi per biomi
-var tree_textures: Dictionary = {}
+# Texture alberi per biomi (split in base e cima)
+var tree_base_textures: Dictionary = {}
+var tree_top_textures: Dictionary = {}
 
 func _ready():
 	# Carica i frame dell'animazione della base robotica
@@ -70,21 +71,11 @@ func _ready():
 		load("res://assets/robot_base_3.svg")
 	]
 	
-	# Carica le texture degli alberi per ogni bioma
-	tree_textures = {
-		"fa0": load("res://assets/tree_fa0.svg"),
-		"f0a": load("res://assets/tree_f0a.svg"),
-		"af0": load("res://assets/tree_af0.svg"),
-		"0fa": load("res://assets/tree_0fa.svg"),
-		"a0f": load("res://assets/tree_a0f.svg"),
-		"0af": load("res://assets/tree_0af.svg"),
-		"f00": load("res://assets/tree_f00.svg"),
-		"0f0": load("res://assets/tree_0f0.svg"),
-		"00f": load("res://assets/tree_00f.svg"),
-		"f0f": load("res://assets/tree_f0f.svg"),
-		"0ff": load("res://assets/tree_0ff.svg"),
-		"ff0": load("res://assets/tree_ff0.svg")
-	}
+	# Carica le texture degli alberi split (base e cima)
+	var biome_ids = ["fa0", "f0a", "af0", "0fa", "a0f", "0af", "f00", "0f0", "00f", "f0f", "0ff", "ff0"]
+	for biome_id in biome_ids:
+		tree_base_textures[biome_id] = load("res://assets/tree_" + biome_id + "_base.svg")
+		tree_top_textures[biome_id] = load("res://assets/tree_" + biome_id + "_top.svg")
 	
 	minimap = Minimap.new()
 	minimap.meta_maze_size = meta_maze_size
@@ -531,14 +522,18 @@ func _draw():
 				var wall_tile_color = biome_manager.get_tile_color(global_x, global_y, x, y)
 				var biome_id = biome_manager.get_biome_id_from_color(wall_tile_color)
 				
-				if biome_id != "":
-					# Verifica che il tree texture esista e sia caricato
-					var tree_texture = tree_textures.get(biome_id, null)
-					if tree_texture != null:
-						# Disegna l'albero completo per ora (debug)
-						var tree_size = Vector2(32, 48)
-						var tree_pos = Vector2(x * cell_size - 6, y * cell_size - 28)
-						draw_texture_rect(tree_texture, Rect2(tree_pos, tree_size), false)
+				if biome_id != "" and tree_base_textures.has(biome_id):
+					# LAYER 1: Disegna la BASE dell'albero (tronco)
+					var tree_base = tree_base_textures[biome_id]
+					draw_texture_rect(tree_base, Rect2(x * cell_size - 6, y * cell_size - 4, 32, 24), false)
+					
+					# Salva per LAYER 2: la CIMA va disegnata dopo il robot
+					if tree_top_textures.has(biome_id):
+						tree_tops.append({
+							"texture": tree_top_textures[biome_id],
+							"x": x,
+							"y": y
+						})
 
 	
 	# Disegna gli oggetti piazzati in questa cella
@@ -582,6 +577,14 @@ func _draw():
 			var robot_size = Vector2(24, 32)
 			var robot_pos = robot.position - robot_size / 2
 			draw_texture_rect(robot_texture, Rect2(robot_pos, robot_size), false)
+	
+	# ==== LAYER 2: CIME DEGLI ALBERI (sopra il robot) ====
+	for tree_data in tree_tops:
+		var tree_top = tree_data["texture"]
+		var x = tree_data["x"]
+		var y = tree_data["y"]
+		# Disegna la cima UN TILE SOPRA la base
+		draw_texture_rect(tree_top, Rect2(x * cell_size - 6, y * cell_size - 28, 32, 24), false)
 	
 	# === PARTE 2: MINIMAPPA SENZA TRASFORMAZIONI ===
 	# Reset trasformazione per disegnare la minimappa normalmente

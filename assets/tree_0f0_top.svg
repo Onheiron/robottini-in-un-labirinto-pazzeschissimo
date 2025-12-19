@@ -1,0 +1,25 @@
+<!-- Tree 0f0_top - Green themed oak (chioma - parte superiore) -->
+<svg width="32" height="24" viewBox="0 0 32 24" xmlns="http://www.w3.org/2000/svg">
+  <!-- Strong oak trunk upper part -->
+  <path d="M 14 24 L 15 24 L 15 10 Q 15 8 16 6" fill="#5D4E37" stroke="#4A3B2A" stroke-width="1"/>
+  <path d="M 18 24 L 17 24 L 17 10 Q 17 8 16 6" fill="#6B5D4A" stroke="#4A3B2A" stroke-width="1"/>
+  
+  <!-- Thick branches -->
+  <path d="M 16 12 Q 12 14 8 14" stroke="#5D4E37" stroke-width="3" fill="none"/>
+  <path d="M 16 12 Q 20 14 24 14" stroke="#5D4E37" stroke-width="3" fill="none"/>
+  <path d="M 16 18 Q 10 20 6 22" stroke="#5D4E37" stroke-width="2.5" fill="none"/>
+  <path d="M 16 18 Q 22 20 26 22" stroke="#5D4E37" stroke-width="2.5" fill="none"/>
+  
+  <!-- Bushy green foliage -->
+  <ellipse cx="8" cy="14" rx="5" ry="6" fill="#00AA00"/>
+  <ellipse cx="24" cy="14" rx="5" ry="6" fill="#00AA00"/>
+  <ellipse cx="16" cy="8" rx="6" ry="7" fill="#00BB00"/>
+  <ellipse cx="6" cy="22" rx="4" ry="5" fill="#009900"/>
+  <ellipse cx="26" cy="22" rx="4" ry="5" fill="#009900"/>
+  <ellipse cx="16" cy="18" rx="7" ry="6" fill="#00CC00"/>
+  
+  <!-- Bright green highlights -->
+  <ellipse cx="10" cy="12" rx="2" ry="3" fill="#00FF00"/>
+  <ellipse cx="22" cy="12" rx="2" ry="3" fill="#00FF00"/>
+  <ellipse cx="16" cy="6" rx="3" ry="3" fill="#00FF00"/>
+</svg>

@@ -1,0 +1,17 @@
+<!-- Tree 0fa_base - Cyan/turquoise themed conifer (trunk - parte inferiore) -->
+<svg width="32" height="24" viewBox="0 24 32 24" xmlns="http://www.w3.org/2000/svg">
+  <!-- Trunk - simple and straight -->
+  <rect x="14" y="30" width="4" height="18" fill="#5D4E37"/>
+  
+  <!-- Triangular evergreen layer -->
+  <path d="M 16 24 L 4 36 L 28 36 Z" fill="#2D5A3A"/>
+  
+  <!-- Cyan/turquoise snow on branch -->
+  <path d="M 16 24 L 8 32 L 24 32 Z" fill="#00FFAA"/>
+  
+  <!-- Cyan lights/berries -->
+  <circle cx="10" cy="26" r="1.5" fill="#00FFAA"/>
+  <circle cx="22" cy="26" r="1.5" fill="#00FFAA"/>
+  <circle cx="14" cy="32" r="1.5" fill="#00FFAA"/>
+  <circle cx="18" cy="32" r="1.5" fill="#00FFAA"/>
+</svg>

@@ -1,0 +1,10 @@
+<!-- Tree f00_base - Red themed autumn maple (trunk - parte inferiore) -->
+<svg width="32" height="24" viewBox="0 24 32 24" xmlns="http://www.w3.org/2000/svg">
+  <!-- Thick trunk -->
+  <rect x="13" y="24" width="6" height="24" rx="2" fill="#6B4423"/>
+  <rect x="14" y="25" width="4" height="22" rx="1.5" fill="#8B5A2B"/>
+  
+  <!-- Falling leaves -->
+  <path d="M 6 28 L 7 29 L 6 30 L 5 29 Z" fill="#FF0000"/>
+  <path d="M 26 32 L 27 33 L 26 34 L 25 33 Z" fill="#DD0000"/>
+</svg>

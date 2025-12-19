@@ -1,0 +1,18 @@
+<!-- Tree 0ff_base - Cyan themed tropical fern (trunk - parte inferiore) -->
+<svg width="32" height="24" viewBox="0 24 32 24" xmlns="http://www.w3.org/2000/svg">
+  <!-- Central stem -->
+  <rect x="15" y="8" width="2" height="40" rx="1" fill="#3A5A3A"/>
+  
+  <!-- Fern fronds - alternating pattern -->
+  <path d="M 16 24 Q 10 24 6 22 Q 8 23 10 24 Q 12 25 16 26" fill="#2A6A4A"/>
+  <path d="M 16 30 Q 22 30 26 28 Q 24 29 22 30 Q 20 31 16 32" fill="#2A6A4A"/>
+  <path d="M 16 36 Q 10 36 6 34 Q 8 35 10 36 Q 12 37 16 38" fill="#2A6A4A"/>
+  <path d="M 16 42 Q 22 42 26 40 Q 24 41 22 42 Q 20 43 16 44" fill="#2A6A4A"/>
+  
+  <!-- Cyan highlights on fronds -->
+  <path d="M 16 24 Q 10 24 6 22" stroke="#00FFFF" stroke-width="1" fill="none"/>
+  <path d="M 16 30 Q 22 30 26 28" stroke="#00FFFF" stroke-width="1" fill="none"/>
+  
+  <!-- Cyan spores -->
+  <circle cx="24" cy="28" r="1" fill="#00FFFF"/>
+</svg>

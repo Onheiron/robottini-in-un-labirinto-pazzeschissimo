@@ -1,0 +1,9 @@
+<!-- Tree 00f_top - Blue themed mystical willow (chioma - parte superiore) -->
+<svg width="32" height="24" viewBox="0 0 32 24" xmlns="http://www.w3.org/2000/svg">
+  <!-- Flowing branches upper parts -->
+  <path d="M 16 20 Q 12 24 10 32" stroke="#4A5A6A" stroke-width="1.5" fill="none"/>
+  <path d="M 16 20 Q 20 24 22 32" stroke="#4A5A6A" stroke-width="1.5" fill="none"/>
+  
+  <!-- Blue glowing leaves -->
+  <ellipse cx="16" cy="16" rx="5" ry="6" fill="#0000CC"/>
+</svg>
