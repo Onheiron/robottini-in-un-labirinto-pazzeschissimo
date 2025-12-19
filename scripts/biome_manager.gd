@@ -17,7 +17,7 @@ func _init(_seed: int = 0):
 	# Inizializza noise per confini biomi
 	noise = FastNoiseLite.new()
 	noise.seed = game_seed
-	noise.frequency = 0.05  # Variazioni smooth sui confini
+	noise.frequency = 0.15  # Aumentato per confini più frastagliati
 	noise.noise_type = FastNoiseLite.TYPE_PERLIN
 	
 	# Inizializza noise per variazioni tile pavimento
@@ -84,8 +84,8 @@ func _generate_biome_distribution() -> void:
 					var base_influence = 1.0 / (distance + 1.0)
 					# Apply noise to make boundaries less rigid
 					var noise_value = noise.get_noise_2d(x, y)
-					# Noise is -1 to 1, normalize to 0.5 to 1.5 multiplier
-					var noise_multiplier = 1.0 + noise_value * 0.5
+					# Noise is -1 to 1, usa un moltiplicatore più aggressivo per più scattering
+					var noise_multiplier = 1.0 + noise_value * 1.5
 					influences[biome.id] = base_influence * noise_multiplier
 			
 			# Normalize influences to percentages
@@ -172,12 +172,12 @@ func get_tile_color(cell_x: int, cell_y: int, tile_x: int, tile_y: int) -> Color
 		# Mix di biomi: usa noise solo se ci sono almeno 2 biomi significativi (>15%)
 		var significant_biomes = []
 		for biome_id in biomes.keys():
-			if biomes[biome_id] > 0.15:
+			if biomes[biome_id] > 0.05:  # Ridotta soglia da 0.15 a 0.05 per più mix
 				significant_biomes.append({"id": biome_id, "percentage": biomes[biome_id]})
 		
 		if significant_biomes.size() > 1:
 			# Usa noise per transizioni organiche tra biomi significativi
-			var mix_noise = noise.get_noise_2d(global_tile_x * 0.05, global_tile_y * 0.05)
+			var mix_noise = noise.get_noise_2d(global_tile_x * 0.2, global_tile_y * 0.2)  # Aumentata frequenza da 0.05 a 0.2
 			# Normalizza noise a 0-1
 			var mix_value = (mix_noise + 1.0) / 2.0
 			
