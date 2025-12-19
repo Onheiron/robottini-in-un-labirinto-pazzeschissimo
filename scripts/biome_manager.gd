@@ -65,59 +65,54 @@ func _initialize_grid() -> void:
 func _generate_biome_distribution() -> void:
 	var rng = RandomNumberGenerator.new()
 	rng.seed = game_seed
-	
-	# Assign random origin points for each biome
+
+	# Assegna punti origine casuali ai biomi
 	for biome in active_biomes:
 		biome.origin = Vector2i(
 			rng.randi_range(0, grid_size - 1),
 			rng.randi_range(0, grid_size - 1)
 		)
-	
-	# Calculate biome influence for each cell based on distance
+
+	# Primo passaggio: assegna a ogni cella il bioma più vicino (Voronoi puro)
 	for x in range(grid_size):
 		for y in range(grid_size):
 			var cell_pos = Vector2i(x, y)
-			var influences = {}
-			
-			# Calcola influenza per TUTTI i biomi
+			var min_dist = 999999
+			var closest_biome_id = ""
 			for biome in active_biomes:
-				var distance = _manhattan_distance(cell_pos, biome.origin)
-				if distance == 0:
-					# Cella all'origine, 100% questo bioma
-					influences[biome.id] = 1.0
-					break
-				else:
-					# Influenza inversamente proporzionale alla distanza
-					var base_influence = 1.0 / (distance + 1.0)
-					# Applica boundary_noise per variare i confini (MODERATAMENTE!)
-					var noise_value = boundary_noise.get_noise_2d(x, y)
-					# Limita il noise a ±30% per non invertire l'ordine
-					var noise_multiplier = 1.0 + noise_value * 0.3
-					influences[biome.id] = base_influence * noise_multiplier
-			
-			# DOPO aver applicato il noise, tieni solo i 3 biomi con PIÙ influenza
-			if influences.size() > 3:
-				var sorted_biomes = []
-				for biome_id in influences.keys():
-					sorted_biomes.append({"id": biome_id, "influence": influences[biome_id]})
-				sorted_biomes.sort_custom(func(a, b): return a["influence"] > b["influence"])
-				
-				# Tieni solo i top 3
-				var top_influences = {}
-				for i in range(min(3, sorted_biomes.size())):
-					top_influences[sorted_biomes[i]["id"]] = sorted_biomes[i]["influence"]
-				influences = top_influences
-			
-			# Normalize influences to percentages
-			var total_influence = 0.0
-			for influence in influences.values():
-				total_influence += influence
-			
-			if total_influence > 0:
-				for biome_id in influences.keys():
-					influences[biome_id] = influences[biome_id] / total_influence
-			
-			biome_grid[x][y] = influences
+				var dist = _manhattan_distance(cell_pos, biome.origin)
+				# Applica un piccolo noise ai confini per renderli meno dritti
+				var noise = boundary_noise.get_noise_2d(x, y) * 0.5
+				var d = dist + noise
+				if d < min_dist:
+					min_dist = d
+					closest_biome_id = biome.id
+			# Di default, la cella è SOLO di quel bioma
+			biome_grid[x][y] = {closest_biome_id: 1.0}
+
+	# Secondo passaggio: solo sulle celle di confine, mischia con i biomi adiacenti
+	for x in range(grid_size):
+		for y in range(grid_size):
+			var this = biome_grid[x][y].keys()[0]
+			var neighbors = []
+			for dx in [-1, 0, 1]:
+				for dy in [-1, 0, 1]:
+					if dx == 0 and dy == 0:
+						continue
+					var nx = x + dx
+					var ny = y + dy
+					if nx >= 0 and nx < grid_size and ny >= 0 and ny < grid_size:
+						var n_biome = biome_grid[nx][ny].keys()[0]
+						if n_biome != this and not neighbors.has(n_biome):
+							neighbors.append(n_biome)
+			# Se ci sono biomi diversi tra i vicini, siamo su un confine
+			if neighbors.size() > 0:
+				# Mischia: percentuale dominante 60%, resto diviso tra i vicini
+				var mix = {}
+				mix[this] = 0.6
+				for n in neighbors:
+					mix[n] = 0.4 / neighbors.size()
+				biome_grid[x][y] = mix
 
 func _manhattan_distance(a: Vector2i, b: Vector2i) -> int:
 	return abs(a.x - b.x) + abs(a.y - b.y)
