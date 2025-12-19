@@ -488,12 +488,15 @@ func _draw():
 			# Colora diversamente le tile visitate dal robot
 			var color: Color
 			if cell_type == MazeBuilder.CellType.WALL:
-				# Muri: usa colore del bioma
+				# Muri: usa colore del bioma scurito
 				color = biome_color.darkened(0.3)
 			else:
-				# Verifica se la tile è stata visitata
+				# Pavimento: usa noise per variare luminosità e mix di biomi
+				var tile_color = biome_manager.get_tile_color(global_x, global_y, x, y)
+				
+				# Verifica se la tile è stata visitata e sovrascrivi con verde chiaro
 				var is_visited = world_state.is_tile_visited(current_meta_cell_x, current_meta_cell_y, current_cell_x, current_cell_y, x, y)
-				color = Color(0.6, 1.0, 0.6) if is_visited else Color.WHITE  # Verde chiaro vs bianco
+				color = Color(0.6, 1.0, 0.6) if is_visited else tile_color
 			
 			var rect = Rect2(x * cell_size, y * cell_size, cell_size, cell_size)
 			draw_rect(rect, color)
