@@ -1,21 +1,182 @@
-<!-- Tree 0ff_top - Cyan themed tropical fern (chioma - parte superiore) -->
-<svg width="32" height="24" viewBox="0 0 32 24" xmlns="http://www.w3.org/2000/svg">
-  <!-- Central stem -->
-  <rect x="15" y="8" width="2" height="16" rx="1" fill="#3A5A3A"/>
-  
-  <!-- Fern fronds - alternating pattern -->
-  <path d="M 16 12 Q 10 12 6 10 Q 8 11 10 12 Q 12 13 16 14" fill="#2A6A4A"/>
-  <path d="M 16 12 Q 8 12 4 10 Q 6 11 8 12 Q 10 13 16 14" fill="#1A5A3A"/>
-  
-  <path d="M 16 18 Q 22 18 26 16 Q 24 17 22 18 Q 20 19 16 20" fill="#2A6A4A"/>
-  <path d="M 16 18 Q 24 18 28 16 Q 26 17 24 18 Q 22 19 16 20" fill="#1A5A3A"/>
-  
-  <!-- Cyan highlights on fronds -->
-  <path d="M 16 12 Q 10 12 6 10" stroke="#00FFFF" stroke-width="1" fill="none"/>
-  <path d="M 16 18 Q 22 18 26 16" stroke="#00FFFF" stroke-width="1" fill="none"/>
-  
-  <!-- Cyan spores -->
-  <circle cx="8" cy="10" r="1" fill="#00FFFF"/>
-  <circle cx="24" cy="16" r="1" fill="#00FFFF"/>
-  <circle cx="8" cy="22" r="1" fill="#00FFFF"/>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="30.000002mm"
+   height="30.000011mm"
+   viewBox="0 0 30.000002 30.000011"
+   version="1.1"
+   id="svg1"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1">
+    <linearGradient
+       id="linearGradient2085">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop2085" />
+      <stop
+         style="stop-color:#000000;stop-opacity:0;"
+         offset="1"
+         id="stop2086" />
+    </linearGradient>
+    <filter
+       style="color-interpolation-filters:sRGB"
+       id="filter285"
+       x="-0.47255054"
+       y="-0.37809861"
+       width="1.9451011"
+       height="1.7561972">
+      <feGaussianBlur
+         stdDeviation="2.5173236"
+         id="feGaussianBlur285" />
+    </filter>
+    <radialGradient
+       xlink:href="#linearGradient2085"
+       id="radialGradient2116"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.99777143,-0.00427608,0.00314826,0.76465133,119.95866,138.93313)"
+       cx="15.000118"
+       cy="23.711472"
+       fx="15.000118"
+       fy="23.711472"
+       r="15.000118" />
+  </defs>
+  <g
+     id="layer1"
+     transform="translate(-120,-140)">
+    <rect
+       style="opacity:0.3;fill:#ffaaaa;fill-opacity:0.4;fill-rule:nonzero;stroke:none;stroke-width:1.17446;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="rect373"
+       width="30"
+       height="30"
+       x="120"
+       y="170"
+       ry="0" />
+    <rect
+       style="opacity:0.3;fill:none;fill-opacity:0.4;fill-rule:nonzero;stroke:none;stroke-width:1.17446;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="rect372"
+       width="30"
+       height="30"
+       x="120"
+       y="140"
+       ry="0" />
+    <path
+       id="path2116"
+       style="opacity:1;fill:url(#radialGradient2116);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.16731;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       d="m 135,145.5 a 14.99988,11.499994 0 0 0 -14.96693,11.11486 H 120 v 0.38488 6.41627 h 2.59 A 14.99988,11.499994 0 0 0 135,168.5 14.99988,11.499994 0 0 0 147.40999,163.41601 H 150 v -6.41627 -0.38488 h -0.0114 A 14.99988,11.499994 0 0 0 135,145.5 Z" />
+    <ellipse
+       style="fill:#216778;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.722961;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="ellipse377"
+       cx="140.6898"
+       cy="173.22411"
+       rx="9.1871433"
+       ry="7.202239" />
+    <ellipse
+       style="fill:#5fbcd3;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.681383;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="ellipse378"
+       cx="140.6898"
+       cy="172.41953"
+       rx="9.1871433"
+       ry="6.3976512" />
+    <ellipse
+       style="mix-blend-mode:normal;fill:#ffb380;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.73295;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter285)"
+       id="ellipse379"
+       cx="10.853213"
+       cy="25.291348"
+       rx="8.5123634"
+       ry="7.989419"
+       transform="matrix(0.41745503,0,0,0.32726284,130.98511,158.55392)" />
+    <ellipse
+       style="fill:#216778;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.974778;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="ellipse380"
+       cx="135.05618"
+       cy="165.46812"
+       rx="12.795294"
+       ry="9.4012356" />
+    <ellipse
+       style="fill:#5fbcd3;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.918724;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="ellipse381"
+       cx="135.05618"
+       cy="164.41788"
+       rx="12.795294"
+       ry="8.3509903" />
+    <ellipse
+       style="mix-blend-mode:normal;fill:#c8beb7;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.73295;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter285)"
+       id="ellipse382"
+       cx="10.853213"
+       cy="25.291348"
+       rx="8.5123634"
+       ry="7.989419"
+       transform="matrix(0.48116562,0,0,0.3535324,126.199,152.32353)" />
+    <ellipse
+       style="fill:#216778;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.370848;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="ellipse1538"
+       cx="131.20818"
+       cy="172.54715"
+       rx="4.9598889"
+       ry="3.5102432" />
+    <ellipse
+       style="fill:#5fbcd3;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.34952;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="ellipse1539"
+       cx="131.20818"
+       cy="172.15501"
+       rx="4.9598889"
+       ry="3.1181014" />
+    <ellipse
+       style="mix-blend-mode:normal;fill:#afdde9;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.73295;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter285)"
+       id="ellipse1540"
+       cx="10.853213"
+       cy="25.291348"
+       rx="8.5123634"
+       ry="7.989419"
+       transform="matrix(0.18651606,0,0,0.1320023,127.77482,167.43833)" />
+    <ellipse
+       style="fill:#216778;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.676634;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="ellipse1544"
+       cx="131.04633"
+       cy="158.44424"
+       rx="8.4238319"
+       ry="6.8804765" />
+    <ellipse
+       style="fill:#5fbcd3;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.637722;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="ellipse1545"
+       cx="131.04633"
+       cy="157.67561"
+       rx="8.4238319"
+       ry="6.111834" />
+    <ellipse
+       style="mix-blend-mode:normal;fill:#afdde9;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.73295;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter285)"
+       id="ellipse1546"
+       cx="10.853213"
+       cy="25.291348"
+       rx="8.5123634"
+       ry="7.989419"
+       transform="matrix(0.31677727,0,0,0.25873954,125.21517,148.82413)" />
+    <ellipse
+       style="fill:#216778;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.504418;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="ellipse1547"
+       cx="140.73978"
+       cy="156.39284"
+       rx="6.2798128"
+       ry="5.1292696" />
+    <ellipse
+       style="fill:#5fbcd3;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.47541;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="ellipse1548"
+       cx="140.73978"
+       cy="155.81982"
+       rx="6.2798128"
+       ry="4.5562606" />
+    <ellipse
+       style="mix-blend-mode:normal;fill:#afdde9;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.73295;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter285)"
+       id="ellipse1549"
+       cx="10.853213"
+       cy="25.291348"
+       rx="8.5123634"
+       ry="7.989419"
+       transform="matrix(0.23615166,0,0,0.1928856,136.39275,149.22122)" />
+  </g>
 </svg>

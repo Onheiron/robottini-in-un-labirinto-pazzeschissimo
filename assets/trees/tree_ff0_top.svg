@@ -1,25 +1,129 @@
-<!-- Tree ff0_top - Yellow themed sunflower tree (chioma - parte superiore) -->
-<svg width="32" height="24" viewBox="0 0 32 24" xmlns="http://www.w3.org/2000/svg">
-  <!-- Large sunflower head -->
-  <circle cx="16" cy="12" r="8" fill="#FFFF00"/>
-  
-  <!-- Yellow petals -->
-  <ellipse cx="16" cy="4" rx="2.5" ry="4" fill="#FFFF00"/>
-  <ellipse cx="16" cy="20" rx="2.5" ry="4" fill="#FFFF00"/>
-  <ellipse cx="8" cy="12" rx="4" ry="2.5" fill="#FFFF00"/>
-  <ellipse cx="24" cy="12" rx="4" ry="2.5" fill="#FFFF00"/>
-  <ellipse cx="10" cy="6" rx="3" ry="3" fill="#FFEE00" transform="rotate(-45 10 6)"/>
-  <ellipse cx="22" cy="6" rx="3" ry="3" fill="#FFEE00" transform="rotate(45 22 6)"/>
-  <ellipse cx="10" cy="18" rx="3" ry="3" fill="#FFEE00" transform="rotate(45 10 18)"/>
-  <ellipse cx="22" cy="18" rx="3" ry="3" fill="#FFEE00" transform="rotate(-45 22 18)"/>
-  
-  <!-- Brown center -->
-  <circle cx="16" cy="12" r="4" fill="#654321"/>
-  
-  <!-- Seeds pattern -->
-  <circle cx="14" cy="10" r="0.8" fill="#4A3B2A"/>
-  <circle cx="18" cy="10" r="0.8" fill="#4A3B2A"/>
-  <circle cx="14" cy="14" r="0.8" fill="#4A3B2A"/>
-  <circle cx="18" cy="14" r="0.8" fill="#4A3B2A"/>
-  <circle cx="16" cy="12" r="0.8" fill="#4A3B2A"/>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="29.999992mm"
+   height="30.000011mm"
+   viewBox="0 0 29.999992 30.000011"
+   version="1.1"
+   id="svg1"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1">
+    <linearGradient
+       id="linearGradient2085">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop2085" />
+      <stop
+         style="stop-color:#000000;stop-opacity:0;"
+         offset="1"
+         id="stop2086" />
+    </linearGradient>
+    <radialGradient
+       xlink:href="#linearGradient2085"
+       id="radialGradient2113"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.99777941,-0.00427608,0.00314829,0.76465133,79.958658,138.93313)"
+       cx="15.000118"
+       cy="23.711472"
+       fx="15.000118"
+       fy="23.711472"
+       r="15.000118" />
+  </defs>
+  <g
+     id="layer1"
+     transform="translate(-80.000002,-140)">
+    <rect
+       style="opacity:0.3;fill:#ffaaaa;fill-opacity:0.4;fill-rule:nonzero;stroke:none;stroke-width:1.17446;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="rect369"
+       width="30"
+       height="30"
+       x="80"
+       y="170"
+       ry="0" />
+    <rect
+       style="opacity:0.3;fill:none;fill-opacity:0.4;fill-rule:nonzero;stroke:none;stroke-width:1.17446;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="rect2112"
+       width="30"
+       height="30"
+       x="80"
+       y="140"
+       ry="0" />
+    <path
+       id="path2113"
+       style="opacity:1;fill:url(#radialGradient2113);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.16731;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       d="M 95.000118,145.5 A 15,11.499994 0 0 0 80.033073,156.61486 H 80 v 0.38488 6.41627 h 2.590023 A 15,11.499994 0 0 0 95.000118,168.5 15,11.499994 0 0 0 107.41021,163.41601 h 2.59003 v -6.41627 -0.38488 h -0.0114 A 15,11.499994 0 0 0 95.000118,145.5 Z" />
+    <rect
+       style="opacity:0.3;fill:none;fill-opacity:0.4;fill-rule:nonzero;stroke:none;stroke-width:1.17446;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="rect368"
+       width="30"
+       height="30"
+       x="80"
+       y="140"
+       ry="0" />
+    <circle
+       style="opacity:1;fill:#d4aa00;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2.42494;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="circle2047"
+       cx="92.595314"
+       cy="162.1904"
+       r="10.907664" />
+    <circle
+       style="opacity:1;fill:#ffd42a;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.58544;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="circle2044"
+       cx="90.351677"
+       cy="162.81107"
+       r="7.1314955" />
+    <circle
+       style="opacity:1;fill:#d4aa00;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.39766;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="circle2046"
+       cx="102.88041"
+       cy="161.4451"
+       r="6.2868261" />
+    <circle
+       style="opacity:1;fill:#ffdd55;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.66276;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="circle2045"
+       cx="96.841911"
+       cy="162.58388"
+       r="7.4793005" />
+    <circle
+       style="opacity:1;fill:#d4aa00;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.33138;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="circle2042"
+       cx="87.477615"
+       cy="171.77988"
+       r="5.9887075" />
+    <circle
+       style="opacity:1;fill:#ffcc00;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="path445"
+       cx="89.522156"
+       cy="170.907"
+       r="4.4981146" />
+    <circle
+       style="opacity:1;fill:#d4aa00;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.33138;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="circle2043"
+       cx="101.88668"
+       cy="172.17737"
+       r="5.9887075" />
+    <circle
+       style="opacity:1;fill:#ffd52d;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.35347;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="circle2041"
+       cx="101.71119"
+       cy="166.36006"
+       r="6.0880804" />
+    <circle
+       style="opacity:1;fill:#d4aa00;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="circle565"
+       cx="96.023682"
+       cy="168.99744"
+       r="4.4981146" />
+    <circle
+       style="opacity:1;fill:#fcc900;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="circle566"
+       cx="100.04053"
+       cy="171.30743"
+       r="4.4981146" />
+  </g>
 </svg>

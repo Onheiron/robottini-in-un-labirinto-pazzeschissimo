@@ -1,16 +1,94 @@
-<!-- Tree f0a_top - Pink/Magenta themed weeping willow (chioma - parte superiore) -->
-<svg width="32" height="24" viewBox="0 0 32 24" xmlns="http://www.w3.org/2000/svg">
-  <!-- Trunk - thin and elegant -->
-  <path d="M 16 24 Q 16 20 15.5 10 Q 16 5 16 0" stroke="#654321" stroke-width="3" fill="none"/>
-  
-  <!-- Drooping branches upper parts -->
-  <path d="M 15 12 Q 10 18 8 24" stroke="#3A5F3A" stroke-width="2" fill="none"/>
-  <path d="M 16 10 Q 12 16 10 24" stroke="#3A5F3A" stroke-width="1.5" fill="none"/>
-  <path d="M 17 12 Q 22 18 24 24" stroke="#3A5F3A" stroke-width="2" fill="none"/>
-  <path d="M 16 10 Q 20 16 22 24" stroke="#3A5F3A" stroke-width="1.5" fill="none"/>
-  
-  <!-- Pink/magenta blossoms -->
-  <circle cx="16" cy="14" r="1.5" fill="#FF00AA"/>
-  <circle cx="14" cy="18" r="1.2" fill="#FF33BB"/>
-  <circle cx="18" cy="18" r="1.2" fill="#FF33BB"/>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="29.999992mm"
+   height="30.000004mm"
+   viewBox="0 0 29.999992 30.000004"
+   version="1.1"
+   id="svg1"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1">
+    <linearGradient
+       id="linearGradient2085">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop2085" />
+      <stop
+         style="stop-color:#000000;stop-opacity:0;"
+         offset="1"
+         id="stop2086" />
+    </linearGradient>
+    <filter
+       style="color-interpolation-filters:sRGB"
+       id="filter285"
+       x="-0.47255054"
+       y="-0.37809861"
+       width="1.9451011"
+       height="1.7561972">
+      <feGaussianBlur
+         stdDeviation="2.5173236"
+         id="feGaussianBlur285" />
+    </filter>
+    <radialGradient
+       xlink:href="#linearGradient2085"
+       id="radialGradient2103"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.99777941,-0.00427608,0.00314829,0.76465133,79.958658,69.433133)"
+       cx="15.000118"
+       cy="23.711472"
+       fx="15.000118"
+       fy="23.711472"
+       r="15.000118" />
+  </defs>
+  <g
+     id="layer1"
+     transform="translate(-80.000002,-69.999998)">
+    <rect
+       style="opacity:0.3;fill:#ffaaaa;fill-opacity:0.4;fill-rule:nonzero;stroke:none;stroke-width:1.17446;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="rect342"
+       width="30"
+       height="30"
+       x="80"
+       y="100"
+       ry="0" />
+    <rect
+       style="opacity:0.3;fill:none;fill-opacity:0.4;fill-rule:nonzero;stroke:none;stroke-width:1.17446;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="rect341"
+       width="30"
+       height="30"
+       x="80"
+       y="70"
+       ry="0" />
+    <path
+       id="path2103"
+       style="opacity:1;fill:url(#radialGradient2103);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.16731;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       d="M 95.000118,76 A 15,11.499994 0 0 0 80.033073,87.114865 H 80 v 0.384871 6.416276 h 2.590023 A 15,11.499994 0 0 0 95.000118,99 15,11.499994 0 0 0 107.41021,93.916012 h 2.59003 v -6.416276 -0.384871 h -0.0114 A 15,11.499994 0 0 0 95.000118,76 Z" />
+    <ellipse
+       style="fill:#d35f8d;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.33779;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="ellipse343"
+       cx="95.011963"
+       cy="98.576889"
+       rx="14.192105"
+       ry="15.964257" />
+    <ellipse
+       style="fill:#de87aa;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.30052;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="ellipse344"
+       cx="95.011963"
+       cy="94.280159"
+       rx="14.910191"
+       ry="14.360354" />
+    <ellipse
+       style="mix-blend-mode:normal;fill:#f4d7e3;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.73295;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter285)"
+       id="ellipse345"
+       cx="10.853213"
+       cy="25.291348"
+       rx="8.5123634"
+       ry="7.989419"
+       transform="matrix(0.59885589,0,0,0.56195024,84.652489,76.149679)" />
+  </g>
 </svg>

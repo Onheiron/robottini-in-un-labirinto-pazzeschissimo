@@ -1,19 +1,122 @@
-<!-- Tree a0f_top - Purple themed dead/twisted tree (chioma - parte superiore) -->
-<svg width="32" height="24" viewBox="0 0 32 24" xmlns="http://www.w3.org/2000/svg">
-  <!-- Twisted trunk -->
-  <path d="M 16 24 Q 15 24 16 16 Q 18 10 16 4" stroke="#3A2A2A" stroke-width="4" fill="none"/>
-  
-  <!-- Bare twisted branches -->
-  <path d="M 16 16 Q 12 14 8 12 Q 6 11 4 10" stroke="#3A2A2A" stroke-width="2.5" fill="none"/>
-  <path d="M 16 20 Q 20 18 24 16 Q 26 15 28 14" stroke="#3A2A2A" stroke-width="2.5" fill="none"/>
-  <path d="M 17 10 Q 14 8 12 6 Q 10 5 8 4" stroke="#3A2A2A" stroke-width="2" fill="none"/>
-  <path d="M 16 12 Q 19 10 22 8 Q 24 7 26 6" stroke="#3A2A2A" stroke-width="2" fill="none"/>
-  
-  <!-- Purple mystical leaves/energy -->
-  <circle cx="8" cy="12" r="2" fill="#AA00FF"/>
-  <circle cx="24" cy="16" r="2" fill="#AA00FF"/>
-  <circle cx="12" cy="6" r="1.5" fill="#AA00FF"/>
-  <circle cx="22" cy="8" r="1.5" fill="#AA00FF"/>
-  <circle cx="6" cy="10" r="1.2" fill="#CC55FF"/>
-  <circle cx="26" cy="14" r="1.2" fill="#CC55FF"/>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="29.999998mm"
+   height="30.000004mm"
+   viewBox="0 0 29.999998 30.000004"
+   version="1.1"
+   id="svg1"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1">
+    <linearGradient
+       id="linearGradient2085">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop2085" />
+      <stop
+         style="stop-color:#000000;stop-opacity:0;"
+         offset="1"
+         id="stop2086" />
+    </linearGradient>
+    <filter
+       style="color-interpolation-filters:sRGB"
+       id="filter285"
+       x="-0.47255054"
+       y="-0.37809861"
+       width="1.9451011"
+       height="1.7561972">
+      <feGaussianBlur
+         stdDeviation="2.5173236"
+         id="feGaussianBlur285" />
+    </filter>
+    <radialGradient
+       xlink:href="#linearGradient2085"
+       id="radialGradient2099"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.99777941,-0.00427608,0.00314829,0.76465133,-0.04134153,69.433133)"
+       cx="15.000118"
+       cy="23.711472"
+       fx="15.000118"
+       fy="23.711472"
+       r="15.000118" />
+  </defs>
+  <g
+     id="layer1"
+     transform="translate(0,-69.999998)">
+    <rect
+       style="opacity:0.3;fill:#ffaaaa;fill-opacity:0.4;fill-rule:nonzero;stroke:none;stroke-width:1.17446;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="rect332"
+       width="30"
+       height="30"
+       x="0"
+       y="100"
+       ry="0" />
+    <rect
+       style="opacity:0.3;fill:none;fill-opacity:0.4;fill-rule:nonzero;stroke:none;stroke-width:1.17446;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="rect331"
+       width="30"
+       height="30"
+       x="0"
+       y="70"
+       ry="0" />
+    <path
+       id="path2099"
+       style="opacity:1;fill:url(#radialGradient2099);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.16731;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       d="M 15.000118,76 A 15,11.499994 0 0 0 0.03307292,87.114865 H 0 v 0.384871 6.416276 H 2.5900228 A 15,11.499994 0 0 0 15.000118,99 15,11.499994 0 0 0 27.410213,93.916012 h 2.590023 v -6.416276 -0.384871 h -0.01137 A 15,11.499994 0 0 0 15.000118,76 Z" />
+    <ellipse
+       style="fill:#217844;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.1884;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="circle335"
+       cx="15.011968"
+       cy="103.69521"
+       rx="14.910191"
+       ry="11.991071" />
+    <ellipse
+       style="fill:#2ca05a;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.09819;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="ellipse335"
+       cx="15.011968"
+       cy="101.94373"
+       rx="14.910191"
+       ry="10.239593" />
+    <ellipse
+       style="fill:#217844;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.1884;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="ellipse386"
+       cx="15.126075"
+       cy="95.70771"
+       rx="14.910191"
+       ry="11.991071" />
+    <ellipse
+       style="fill:#2ca05a;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.0762;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="ellipse387"
+       cx="15.126075"
+       cy="93.550301"
+       rx="14.910191"
+       ry="9.833663" />
+    <ellipse
+       style="fill:#217844;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.80621;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="ellipse388"
+       cx="15.126075"
+       cy="88.198013"
+       rx="10.115072"
+       ry="8.1347408" />
+    <ellipse
+       style="fill:#2ca05a;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.730094;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="ellipse389"
+       cx="15.126075"
+       cy="86.734428"
+       rx="10.115072"
+       ry="6.6711559" />
+    <ellipse
+       style="mix-blend-mode:normal;fill:#87deaa;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.73295;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter285)"
+       id="ellipse390"
+       cx="10.853213"
+       cy="25.291348"
+       rx="8.5123634"
+       ry="7.989419"
+       transform="matrix(0.56069606,0,0,0.49635156,7.7512102,73.717735)" />
+  </g>
 </svg>

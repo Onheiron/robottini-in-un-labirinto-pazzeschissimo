@@ -1,9 +1,95 @@
-<!-- Tree 00f_top - Blue themed mystical willow (chioma - parte superiore) -->
-<svg width="32" height="24" viewBox="0 0 32 24" xmlns="http://www.w3.org/2000/svg">
-  <!-- Flowing branches upper parts -->
-  <path d="M 16 20 Q 12 24 10 32" stroke="#4A5A6A" stroke-width="1.5" fill="none"/>
-  <path d="M 16 20 Q 20 24 22 32" stroke="#4A5A6A" stroke-width="1.5" fill="none"/>
-  
-  <!-- Blue glowing leaves -->
-  <ellipse cx="16" cy="16" rx="5" ry="6" fill="#0000CC"/>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="30.000002mm"
+   height="30.000004mm"
+   viewBox="0 0 30.000002 30.000004"
+   version="1.1"
+   id="svg1"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1">
+    <linearGradient
+       id="linearGradient2085">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop2085" />
+      <stop
+         style="stop-color:#000000;stop-opacity:0;"
+         offset="1"
+         id="stop2086" />
+    </linearGradient>
+    <radialGradient
+       xlink:href="#linearGradient2085"
+       id="radialGradient2106"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.99777941,-0.00427608,0.00314829,0.76465133,119.95866,69.433133)"
+       cx="15.000118"
+       cy="23.711472"
+       fx="15.000118"
+       fy="23.711472"
+       r="15.000118" />
+  </defs>
+  <g
+     id="layer1"
+     transform="translate(-120,-69.999998)">
+    <rect
+       style="opacity:0.3;fill:#ffaaaa;fill-opacity:0.4;fill-rule:nonzero;stroke:none;stroke-width:1.17446;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="rect346"
+       width="30"
+       height="30"
+       x="120"
+       y="100"
+       ry="0" />
+    <rect
+       style="opacity:0.3;fill:none;fill-opacity:0.4;fill-rule:nonzero;stroke:none;stroke-width:1.17446;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="rect345"
+       width="30"
+       height="30"
+       x="120"
+       y="70"
+       ry="0" />
+    <path
+       id="path2106"
+       style="opacity:1;fill:url(#radialGradient2106);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.16731;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       d="M 135.00012,76 A 15,11.499994 0 0 0 120.03307,87.114865 H 120 v 0.384871 6.416276 h 2.59002 A 15,11.499994 0 0 0 135.00012,99 15,11.499994 0 0 0 147.41021,93.916012 h 2.59003 v -6.416276 -0.384871 h -0.0114 A 15,11.499994 0 0 0 135.00012,76 Z" />
+    <path
+       id="path411"
+       style="fill:#803300;fill-opacity:1;stroke-width:1.20003;stroke-linecap:round;stroke-linejoin:round"
+       d="m 136.03142,95.223176 2.88258,-0.495963 -0.0378,9.044057 -0.68459,5.59437 3.28177,7.12807 1.32485,8.87246 c -2.55812,3.45243 -12.58234,3.25507 -15.67359,-0.10178 l 1.6659,-8.72351 2.70721,-5.5548 3.82152,-8.2389 z" />
+    <path
+       id="circle416"
+       style="opacity:0.25;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2.95152;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       d="m 138.914,94.727035 -2.88251,0.496093 -0.7121,7.524092 -2.281,4.91753 a 13.800255,13.800255 0 0 0 3.94653,0.58084 13.800255,13.800255 0 0 0 1.35547,-0.0972 l 0.53589,-4.377 z" />
+    <circle
+       style="fill:#31b197;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2.68873;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="circle413"
+       cx="136.98497"
+       cy="93.216705"
+       r="12.571551" />
+    <path
+       id="circle418"
+       style="opacity:0.15;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.63434;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       d="m 127.64182,89.568693 a 7.6416154,7.6416154 0 0 0 -2.8174,0.557589 12.571551,12.571551 0 0 0 -0.41083,3.09025 12.571551,12.571551 0 0 0 6.42649,10.932148 7.6416154,7.6416154 0 0 0 4.44314,-6.938076 7.6416154,7.6416154 0 0 0 -7.6414,-7.641911 z" />
+    <circle
+       style="fill:#37c8ab;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.33006;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="path412"
+       cx="126.21891"
+       cy="98.633179"
+       r="6.2189059" />
+    <path
+       id="circle417"
+       style="opacity:0.15;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.60668;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       d="m 142.31173,93.037215 a 7.5122781,7.5122781 0 0 0 -7.51221,7.512205 7.5122781,7.5122781 0 0 0 2.15181,5.23637 12.571551,12.571551 0 0 0 0.0336,0.003 12.571551,12.571551 0 0 0 11.96206,-8.760701 7.5122781,7.5122781 0 0 0 -6.63525,-3.990454 z" />
+    <circle
+       style="fill:#37c8ab;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.33006;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="circle412"
+       cx="143.6051"
+       cy="101.84293"
+       r="6.2189059" />
+  </g>
 </svg>

@@ -1,15 +1,94 @@
-<!-- Tree af0_top - Lime/yellow-green themed spiky cactus (chioma - parte superiore) -->
-<svg width="32" height="24" viewBox="0 0 32 24" xmlns="http://www.w3.org/2000/svg">
-  <!-- Main cactus body upper part -->
-  <ellipse cx="16" cy="32" rx="7" ry="16" fill="#4A7C3A"/>
-  <ellipse cx="16" cy="30" rx="6.5" ry="14" fill="#5A8C4A"/>
-  
-  <!-- Lime green spikes -->
-  <path d="M 12 20 L 11 18 L 10 20" fill="#AAFF00"/>
-  <path d="M 16 18 L 15 16 L 14 18" fill="#AAFF00"/>
-  <path d="M 20 20 L 19 18 L 18 20" fill="#AAFF00"/>
-  
-  <!-- Yellow-green flower on top -->
-  <circle cx="16" cy="16" r="3" fill="#DDFF55"/>
-  <circle cx="16" cy="16" r="1.5" fill="#FFFF88"/>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="29.999996mm"
+   height="30.000002mm"
+   viewBox="0 0 29.999996 30.000002"
+   version="1.1"
+   id="svg1"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1">
+    <linearGradient
+       id="linearGradient2085">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop2085" />
+      <stop
+         style="stop-color:#000000;stop-opacity:0;"
+         offset="1"
+         id="stop2086" />
+    </linearGradient>
+    <filter
+       style="color-interpolation-filters:sRGB"
+       id="filter285"
+       x="-0.47255054"
+       y="-0.37809861"
+       width="1.9451011"
+       height="1.7561972">
+      <feGaussianBlur
+         stdDeviation="2.5173236"
+         id="feGaussianBlur285" />
+    </filter>
+    <radialGradient
+       xlink:href="#linearGradient2085"
+       id="radialGradient2089"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.99777941,-0.00419127,0.00314829,0.74948608,39.958658,4.9443728)"
+       cx="15.000118"
+       cy="23.711472"
+       fx="15.000118"
+       fy="23.711472"
+       r="15.000118" />
+  </defs>
+  <g
+     id="layer1"
+     transform="translate(-40.000001)">
+    <rect
+       style="opacity:0.3;fill:#ffaaaa;fill-opacity:0.4;fill-rule:nonzero;stroke:none;stroke-width:1.17446;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="rect302"
+       width="30"
+       height="30"
+       x="40"
+       y="30"
+       ry="0" />
+    <rect
+       style="opacity:0.3;fill:none;fill-opacity:0.4;fill-rule:nonzero;stroke:none;stroke-width:1.17446;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="rect301"
+       width="30"
+       height="30"
+       x="40"
+       y="3.045044e-09"
+       ry="0" />
+    <path
+       id="path2088"
+       style="opacity:1;fill:url(#radialGradient2089);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.15568;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       d="M 55.000118,11.381 A 15,11.271916 0 0 0 40.033073,22.275425 H 40 v 0.377238 6.289022 h 2.590023 a 15,11.271916 0 0 0 12.410095,4.983158 15,11.271916 0 0 0 12.410095,-4.983158 h 2.590023 v -6.289022 -0.377238 h -0.01137 A 15,11.271916 0 0 0 55.000118,11.381 Z" />
+    <ellipse
+       style="fill:#5d6c53;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.24683;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="circle303"
+       cx="55.011967"
+       cy="28.058426"
+       rx="14.910191"
+       ry="13.199123" />
+    <ellipse
+       style="fill:#7c916f;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.17512;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="ellipse303"
+       cx="55.011967"
+       cy="26.583906"
+       rx="14.910191"
+       ry="11.724603" />
+    <ellipse
+       style="mix-blend-mode:normal;fill:#bec8b7;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.73295;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter285)"
+       id="ellipse304"
+       cx="10.853213"
+       cy="25.291348"
+       rx="8.5123634"
+       ry="7.989419"
+       transform="matrix(0.56069606,0,0,0.49635156,44.690791,9.6037115)" />
+  </g>
 </svg>

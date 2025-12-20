@@ -499,7 +499,7 @@ func _draw():
 			
 			# Colora diversamente le tile visitate dal robot
 			var color: Color
-			if cell_type == MazeBuilder.CellType.WALL:
+			if false && cell_type == MazeBuilder.CellType.WALL:
 				# Muri: usa lo stesso sistema del pavimento con noise
 				# così i muri seguono il colore del bioma locale
 				var wall_tile_color = biome_manager.get_tile_color(global_x, global_y, x, y)
@@ -525,7 +525,7 @@ func _draw():
 				if biome_id != "" and tree_base_textures.has(biome_id):
 					# LAYER 1: Disegna la BASE dell'albero (tronco)
 					var tree_base = tree_base_textures[biome_id]
-					draw_texture_rect(tree_base, Rect2(x * cell_size - 6, y * cell_size - 4, 32, 24), false)
+					draw_texture_rect(tree_base, Rect2(x * cell_size, y * cell_size, cell_size, cell_size), false)
 					
 					# Salva per LAYER 2: la CIMA va disegnata dopo il robot
 					if tree_top_textures.has(biome_id):
@@ -574,7 +574,7 @@ func _draw():
 	if robot != null and current_meta_cell_x == robot.current_meta_x and current_meta_cell_y == robot.current_meta_y and current_cell_x == robot.current_cell_x and current_cell_y == robot.current_cell_y:
 		if robot.sprite_frames.size() > 0:
 			var robot_texture = robot.sprite_frames[robot.current_frame]
-			var robot_size = Vector2(24, 32)
+			var robot_size = Vector2(cell_size, cell_size)
 			var robot_pos = robot.position - robot_size / 2
 			draw_texture_rect(robot_texture, Rect2(robot_pos, robot_size), false)
 	
@@ -584,7 +584,7 @@ func _draw():
 		var x = tree_data["x"]
 		var y = tree_data["y"]
 		# Disegna la cima UN TILE SOPRA la base
-		draw_texture_rect(tree_top, Rect2(x * cell_size - 6, y * cell_size - 28, 32, 24), false)
+		draw_texture_rect(tree_top, Rect2(x * cell_size, (y - 1) * cell_size, cell_size, cell_size), false)
 	
 	# === PARTE 2: MINIMAPPA SENZA TRASFORMAZIONI ===
 	# Reset trasformazione per disegnare la minimappa normalmente
