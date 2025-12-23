@@ -9,6 +9,12 @@ extends Node2D
 @export var meta_maze_size: int = 10
 @export_enum("DFS", "Junction") var robot_behavior: String = "DFS"
 
+@export_group("Eller Algorithm Parameters")
+@export_range(0.0, 1.0) var horizontal_wall_probability: float = 0.5  ## Probabilità di creare muri verticali (separare celle)
+@export_range(0.0, 1.0) var vertical_opening_probability: float = 0.5  ## Probabilità di aperture verticali tra righe
+@export_range(0.0, 1.0) var loop_probability: float = 0.0  ## Probabilità di forzare separazione celle nello stesso set (0 = nessun loop)
+@export_range(0.0, 1.0) var disconnection_probability: float = 0.0  ## Probabilità di non obbligare aperture verticali (0 = obbligate)
+
 var maze: Array = []
 var rng: RandomNumberGenerator
 
@@ -211,9 +217,16 @@ func generate_meta_meta_maze():
 		rng.seed = seed_value
 	else:
 		rng.randomize()
-	
+
 	print("Meta-meta-labirinto (padre) generato con seed: ", rng.seed)
-	meta_meta_maze_connections = MazeBuilder.generate_maze_connections(rng, meta_maze_size)
+	meta_meta_maze_connections = MazeBuilder.generate_maze_connections(
+		rng,
+		meta_maze_size,
+		horizontal_wall_probability,
+		vertical_opening_probability,
+		loop_probability,
+		disconnection_probability
+	)
 
 func select_random_starting_meta_cell():
 	## Seleziona casualmente una cella padre di partenza
@@ -226,9 +239,16 @@ func generate_meta_maze():
 	var meta_seed = seed_value + current_meta_cell_x * 100000 + current_meta_cell_y * 10000
 	var meta_rng = RandomNumberGenerator.new()
 	meta_rng.seed = meta_seed
-	
+
 	print("Meta-labirinto (figlio) per cella padre (", current_meta_cell_x, ", ", current_meta_cell_y, ") generato con seed: ", meta_seed)
-	meta_maze_connections = MazeBuilder.generate_maze_connections(meta_rng, meta_maze_size)
+	meta_maze_connections = MazeBuilder.generate_maze_connections(
+		meta_rng,
+		meta_maze_size,
+		horizontal_wall_probability,
+		vertical_opening_probability,
+		loop_probability,
+		disconnection_probability
+	)
 
 func select_random_starting_cell():
 	## Seleziona casualmente una cella figlio di partenza nel labirinto corrente
@@ -398,10 +418,18 @@ func generate_current_cell_maze():
 	var cell_seed = seed_value + current_meta_cell_x * 100000 + current_meta_cell_y * 10000 + current_cell_x * 100 + current_cell_y
 	var cell_rng = RandomNumberGenerator.new()
 	cell_rng.seed = cell_seed
-	
-	maze = MazeBuilder.generate_cell_maze(cell_rng, maze_width, maze_height)
+
+	maze = MazeBuilder.generate_cell_maze(
+		cell_rng,
+		maze_width,
+		maze_height,
+		horizontal_wall_probability,
+		vertical_opening_probability,
+		loop_probability,
+		disconnection_probability
+	)
 	add_border_openings(cell_rng)
-	
+
 	print("Labirinto cella (", current_cell_x, ", ", current_cell_y, ") generato con seed: ", cell_seed)
 
 func has_meta_connection(dx: int, dy: int) -> bool:
